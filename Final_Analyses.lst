@@ -1,0 +1,5535 @@
+ 
+______________________________________________________________________________________________________
+ 
+                    Analysis #1: Mean % Response Change by Interviewing Technique                    1
+
+                                         The MEANS Procedure
+
+        Analysis Variable : Resp_Change Indicator of Response Change between Response Provided
+          in Initial Administration and Response Provided in Re-administration: 1=Yes, 0=No
+ 
+  Assigned
+  Re-administration
+  Interviewing
+  Technique: 'Conv'       N                                               Lower 95%       Upper 95%
+  and 'Stand'           Obs       N            Mean       Std Error     CL for Mean     CL for Mean
+  -------------------------------------------------------------------------------------------------
+  Conv                 2580    2508       0.1826156       0.0077162       0.1674848       0.1977465
+
+  Stand                2320    2240       0.1312500       0.0071362       0.1172556       0.1452444
+  -------------------------------------------------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2a: Logistic Regression with interaction: DV - Resp_Change (dichotomous); IV: Iw_Tech, Que 2
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        4900
+                               Number of Observations Used        4748
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           752
+                                        2            0          3996
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 152 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Opinion      1      0
+                                                 Factual      0      1
+
+                               IW_Tech           Conv         1      0
+                                                 Stand        0      1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2a: Logistic Regression with interaction: DV - Resp_Change (dichotomous); IV: Iw_Tech, Que 3
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            4151.542       3896.205
+                                SC             4158.008       3922.067
+                                -2 Log L       4149.542       3888.205
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       261.3369        3         <.0001
+                       Score                  258.7275        3         <.0001
+                       Wald                   233.6573        3         <.0001
+
+
+                                      Type 3 Analysis of Effects
+ 
+                                                             Wald
+                       Effect                    DF    Chi-Square    Pr > ChiSq
+
+                       IW_Tech                    1       17.4868        <.0001
+                       Question_Type              1      199.0591        <.0001
+                       Question_Typ*IW_Tech       1        0.5123        0.4741
+
+
+                               Analysis of Maximum Likelihood Estimates
+ 
+                                                             Standard          Wald
+     Parameter                             DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+     Intercept                              1     -2.6247      0.1180      494.7762        <.0001
+     IW_Tech              Conv              1      0.3160      0.1532        4.2535        0.0392
+     IW_Tech              Stand             0           0           .         .             .    
+     Question_Type        Opinion           1      1.2213      0.1402       75.8468        <.0001
+     Question_Type        Factual           0           0           .         .             .    
+     Question_Typ*IW_Tech Opinion Conv      1      0.1305      0.1824        0.5123        0.4741
+     Question_Typ*IW_Tech Opinion Stand     0           0           .         .             .    
+     Question_Typ*IW_Tech Factual Conv      0           0           .         .             .    
+     Question_Typ*IW_Tech Factual Stand     0           0           .         .             .    
+
+
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2a: Logistic Regression with interaction: DV - Resp_Change (dichotomous); IV: Iw_Tech, Que 4
+
+                                        The LOGISTIC Procedure
+
+                    Association of Predicted Probabilities and Observed Responses
+
+                         Percent Concordant       55.5    Somers' D    0.348
+                         Percent Discordant       20.8    Gamma        0.456
+                         Percent Tied             23.7    Tau-a        0.093
+                         Pairs                 3004992    c            0.674
+
+
+                          Odds Ratio Estimates and Wald Confidence Intervals
+ 
+        Odds Ratio                                           Estimate    95% Confidence Limits
+
+        Question_Type Opinion vs Factual at IW_Tech=Conv        3.864       3.075        4.856
+        Question_Type Opinion vs Factual at IW_Tech=Stand       3.391       2.576        4.464
+        IW_Tech Conv vs Stand at Question_Type=Factual          1.372       1.016        1.852
+        IW_Tech Conv vs Stand at Question_Type=Opinion          1.563       1.288        1.897
+
+
+                                              Chi-Square Test for Question_Typ*IW_Tech
+                                                     Least Squares Means Slice
+ 
+                                                          Num
+                                         Slice             DF    Chi-Square      Pr > ChiSq
+
+                                         IW_Tech Conv       1        134.41          <.0001
+
+
+                                  Simple Differences of Question_Typ*IW_Tech Least Squares Means
+ 
+                                Type of       Type of
+                                Question      Question
+                                Asked:        Asked:
+                                'Factual',    'Factual',                Standard                               Odds
+                Slice           'Opinion'     'Opinion'     Estimate       Error    z Value    Pr > |z|       Ratio
+
+                IW_Tech Conv    Opinion       Factual         1.3518      0.1166      11.59      <.0001       3.864
+
+
+                              Chi-Square Test for Question_Typ*IW_Tech
+                                      Least Squares Means Slice
+ 
+                                           Num
+                         Slice              DF    Chi-Square      Pr > ChiSq
+
+                         IW_Tech Stand       1         75.85          <.0001
+
+
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2a: Logistic Regression with interaction: DV - Resp_Change (dichotomous); IV: Iw_Tech, Que 5
+
+                                        The LOGISTIC Procedure
+
+                    Simple Differences of Question_Typ*IW_Tech Least Squares Means
+ 
+                  Type of       Type of
+                  Question      Question
+                  Asked:        Asked:
+                  'Factual',    'Factual',                Standard                               Odds
+ Slice            'Opinion'     'Opinion'     Estimate       Error    z Value    Pr > |z|       Ratio
+
+ IW_Tech Stand    Opinion       Factual         1.2213      0.1402       8.71      <.0001       3.391
+
+
+                              Chi-Square Test for Question_Typ*IW_Tech
+                                      Least Squares Means Slice
+ 
+                                               Num
+                     Slice                      DF    Chi-Square      Pr > ChiSq
+
+                     Question_Type Factual       1          4.25          0.0392
+
+
+                    Simple Differences of Question_Typ*IW_Tech Least Squares Means
+ 
+                         Assigned           Assigned
+                         Re-administration  Re-administration
+                         Interviewing       Interviewing
+                         Technique: 'Conv'  Technique: 'Conv'            Standard
+  Slice                  and 'Stand'        and 'Stand'        Estimate     Error  z Value  Pr > |z|
+
+  Question_Type Factual  Conv               Stand                0.3160    0.1532     2.06    0.0392
+
+                   Simple Differences of Question_Typ*IW_Tech Least Squares Means
+ 
+                                       Assigned           Assigned
+                                       Re-administration  Re-administration
+                                       Interviewing       Interviewing
+                                       Technique: 'Conv'  Technique: 'Conv'      Odds
+                Slice                  and 'Stand'        and 'Stand'           Ratio
+
+                Question_Type Factual  Conv               Stand                 1.372
+
+
+                              Chi-Square Test for Question_Typ*IW_Tech
+                                      Least Squares Means Slice
+ 
+                                               Num
+                     Slice                      DF    Chi-Square      Pr > ChiSq
+
+                     Question_Type Opinion       1         20.40          <.0001
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2a: Logistic Regression with interaction: DV - Resp_Change (dichotomous); IV: Iw_Tech, Que 6
+
+                                        The LOGISTIC Procedure
+
+                    Simple Differences of Question_Typ*IW_Tech Least Squares Means
+ 
+                         Assigned           Assigned
+                         Re-administration  Re-administration
+                         Interviewing       Interviewing
+                         Technique: 'Conv'  Technique: 'Conv'            Standard
+  Slice                  and 'Stand'        and 'Stand'        Estimate     Error  z Value  Pr > |z|
+
+  Question_Type Opinion  Conv               Stand                0.4466   0.09887     4.52    <.0001
+
+                   Simple Differences of Question_Typ*IW_Tech Least Squares Means
+ 
+                                       Assigned           Assigned
+                                       Re-administration  Re-administration
+                                       Interviewing       Interviewing
+                                       Technique: 'Conv'  Technique: 'Conv'      Odds
+                Slice                  and 'Stand'        and 'Stand'           Ratio
+
+                Question_Type Opinion  Conv               Stand                 1.563
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2b (Table 1): Logistic Regression w/o interaction: DV - Resp Change (dichotomous); IV: Iw  7
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        4900
+                               Number of Observations Used        4748
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           752
+                                        2            0          3996
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 152 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2b (Table 1): Logistic Regression w/o interaction: DV - Resp Change (dichotomous); IV: Iw  8
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            4151.542       3894.713
+                                SC             4158.008       3914.109
+                                -2 Log L       4149.542       3888.713
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       260.8292        2         <.0001
+                       Score                  251.4255        2         <.0001
+                       Wald                   230.2094        2         <.0001
+
+
+                                     Type 3 Analysis of Effects
+ 
+                                                         Wald
+                          Effect             DF    Chi-Square    Pr > ChiSq
+
+                          IW_Tech             1       24.1475        <.0001
+                          Question_Type       1      209.7731        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                      Standard          Wald
+           Parameter                DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+           Intercept                 1     -1.8266      0.0456     1607.6048        <.0001
+           IW_Tech       Conv        1      0.2043      0.0416       24.1475        <.0001
+           Question_Type Opinion     1      0.6496      0.0449      209.7731        <.0001
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                        Point          95% Wald
+                 Effect                              Estimate      Confidence Limits
+
+                 IW_Tech       Conv vs Stand            1.505       1.278       1.771
+                 Question_Type Opinion vs Factual       3.667       3.075       4.371
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2b (Table 1): Logistic Regression w/o interaction: DV - Resp Change (dichotomous); IV: Iw  9
+
+                                        The LOGISTIC Procedure
+
+                    Association of Predicted Probabilities and Observed Responses
+
+                         Percent Concordant       55.5    Somers' D    0.348
+                         Percent Discordant       20.8    Gamma        0.456
+                         Percent Tied             23.7    Tau-a        0.093
+                         Pairs                 3004992    c            0.674
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+ Analysis #2c: Logistic Regression w/ interaction, excluding the How Risky is Drowsy Driving Questi 10
+                    DV - Resp Change (dichotomous); IV: Iw Tech and Question Type
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        4410
+                               Number of Observations Used        4296
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           574
+                                        2            0          3722
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 114 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+ Analysis #2c: Logistic Regression w/ interaction, excluding the How Risky is Drowsy Driving Questi 11
+                    DV - Resp Change (dichotomous); IV: Iw Tech and Question Type
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            3380.348       3241.691
+                                SC             3386.714       3267.152
+                                -2 Log L       3378.348       3233.691
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       144.6579        3         <.0001
+                       Score                  143.9865        3         <.0001
+                       Wald                   134.0503        3         <.0001
+
+
+                                             Joint Tests
+ 
+                                                             Wald
+                       Effect                    DF    Chi-Square    Pr > ChiSq
+
+                       IW_Tech                    1        6.1532        0.0131
+                       Question_Type              1      129.5041        <.0001
+                       Question_Typ*IW_Tech       1        0.6693        0.4133
+
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+
+
+                               Analysis of Maximum Likelihood Estimates
+ 
+                                                             Standard          Wald
+     Parameter                             DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+     Intercept                              1     -1.9212      0.0479     1605.6654        <.0001
+     IW_Tech              Conv              1      0.1189      0.0479        6.1532        0.0131
+     Question_Type        Opinion           1      0.5456      0.0479      129.5041        <.0001
+     Question_Typ*IW_Tech Opinion Conv      1     -0.0392      0.0479        0.6693        0.4133
+
+
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+ Analysis #2c: Logistic Regression w/ interaction, excluding the How Risky is Drowsy Driving Questi 12
+                    DV - Resp Change (dichotomous); IV: Iw Tech and Question Type
+
+                                        The LOGISTIC Procedure
+
+                    Association of Predicted Probabilities and Observed Responses
+
+                         Percent Concordant       52.6    Somers' D    0.288
+                         Percent Discordant       23.8    Gamma        0.377
+                         Percent Tied             23.6    Tau-a        0.067
+                         Pairs                 2136428    c            0.644
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2d: Logistic Regression w/o interaction, excluding the How Risky is Drowsy Driving Questi 13
+                    DV - Resp Change (dichotomous); IV: Iw Tech and Question Type
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        4410
+                               Number of Observations Used        4296
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           574
+                                        2            0          3722
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 114 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2d: Logistic Regression w/o interaction, excluding the How Risky is Drowsy Driving Questi 14
+                    DV - Resp Change (dichotomous); IV: Iw Tech and Question Type
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            3380.348       3240.362
+                                SC             3386.714       3259.459
+                                -2 Log L       3378.348       3234.362
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       143.9860        2         <.0001
+                       Score                  143.9686        2         <.0001
+                       Wald                   135.1439        2         <.0001
+
+
+                                     Type 3 Analysis of Effects
+ 
+                                                         Wald
+                          Effect             DF    Chi-Square    Pr > ChiSq
+
+                          IW_Tech             1        5.5354        0.0186
+                          Question_Type       1      130.2039        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                      Standard          Wald
+           Parameter                DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+           Intercept                 1     -1.9187      0.0477     1617.5789        <.0001
+           IW_Tech       Conv        1      0.1083      0.0460        5.5354        0.0186
+           Question_Type Opinion     1      0.5399      0.0473      130.2039        <.0001
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                        Point          95% Wald
+                 Effect                              Estimate      Confidence Limits
+
+                 IW_Tech       Conv vs Stand            1.242       1.037       1.487
+                 Question_Type Opinion vs Factual       2.944       2.446       3.544
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2d: Logistic Regression w/o interaction, excluding the How Risky is Drowsy Driving Questi 15
+                    DV - Resp Change (dichotomous); IV: Iw Tech and Question Type
+
+                                        The LOGISTIC Procedure
+
+                    Association of Predicted Probabilities and Observed Responses
+
+                         Percent Concordant       52.6    Somers' D    0.288
+                         Percent Discordant       23.8    Gamma        0.377
+                         Percent Tied             23.6    Tau-a        0.067
+                         Pairs                 2136428    c            0.644
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2e: Logistic Regression w/o interaction: DV - Resp Change (dichotomous); IV: Iw Tech, Que 16
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        4900
+                               Number of Observations Used        4748
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           752
+                                        2            0          3996
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 152 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                       Class             Value                 Design Variables
+
+                       Question_Type     Factual               -1              
+                                         Opinion                1              
+
+                       IW_Tech           Conv                   1              
+                                         Stand                 -1              
+
+                       Educ_2cat         Coll or More          -1              
+                                         Some Coll or Less      1              
+
+                       Age_4cat          18-44                 -1     -1     -1
+                                         45-59                  1      0      0
+                                         60-69                  0      1      0
+                                         70+                    0      0      1
+
+                       Sex_R             Female                -1              
+                                         Male                   1              
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2e: Logistic Regression w/o interaction: DV - Resp Change (dichotomous); IV: Iw Tech, Que 17
+
+                                        The LOGISTIC Procedure
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            4151.542       3897.237
+                                SC             4158.008       3948.961
+                                -2 Log L       4149.542       3881.237
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       268.3051        7         <.0001
+                       Score                  258.5046        7         <.0001
+                       Wald                   236.5570        7         <.0001
+
+
+                                     Type 3 Analysis of Effects
+ 
+                                                         Wald
+                          Effect             DF    Chi-Square    Pr > ChiSq
+
+                          IW_Tech             1       25.5372        <.0001
+                          Question_Type       1      210.8532        <.0001
+                          Educ_2cat           1        0.0201        0.8872
+                          Age_4cat            3        7.4077        0.0600
+                          Sex_R               1        0.1215        0.7275
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                           Standard          Wald
+      Parameter                          DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+      Intercept                           1     -1.8231      0.0463     1550.4952        <.0001
+      IW_Tech       Conv                  1      0.2116      0.0419       25.5372        <.0001
+      Question_Type Opinion               1      0.6520      0.0449      210.8532        <.0001
+      Educ_2cat     Some Coll or Less     1     0.00591      0.0417        0.0201        0.8872
+      Age_4cat      45-59                 1     -0.0560      0.0666        0.7068        0.4005
+      Age_4cat      60-69                 1     -0.1228      0.0741        2.7416        0.0978
+      Age_4cat      70+                   1      0.1907      0.0741        6.6195        0.0101
+      Sex_R         Male                  1     -0.0144      0.0413        0.1215        0.7275
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis #2e: Logistic Regression w/o interaction: DV - Resp Change (dichotomous); IV: Iw Tech, Que 18
+
+                                        The LOGISTIC Procedure
+
+                                        Odds Ratio Estimates
+                                                  
+                                                               Point          95% Wald
+         Effect                                             Estimate      Confidence Limits
+
+         IW_Tech       Conv vs Stand                           1.527       1.296       1.799
+         Question_Type Opinion vs Factual                      3.684       3.090       4.393
+         Educ_2cat     Some Coll or Less vs Coll or More       1.012       0.859       1.191
+         Age_4cat      45-59 vs 18-44                          0.957       0.770       1.189
+         Age_4cat      60-69 vs 18-44                          0.895       0.707       1.133
+         Age_4cat      70+   vs 18-44                          1.224       0.967       1.550
+         Sex_R         Male vs Female                          0.972       0.826       1.142
+
+
+                    Association of Predicted Probabilities and Observed Responses
+
+                         Percent Concordant       67.2    Somers' D    0.360
+                         Percent Discordant       31.2    Gamma        0.366
+                         Percent Tied              1.6    Tau-a        0.096
+                         Pairs                 3004992    c            0.680
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+               Appendix B: Logistic Regression w/ interaction: Only Coll or More cases              19
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2150
+                               Number of Observations Used        2118
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           329
+                                        2            0          1789
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 32 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+               Appendix B: Logistic Regression w/ interaction: Only Coll or More cases              20
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            1831.329       1706.110
+                                SC             1836.988       1728.743
+                                -2 Log L       1829.329       1698.110
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       131.2193        3         <.0001
+                       Score                  130.9336        3         <.0001
+                       Wald                   116.6167        3         <.0001
+
+
+                                             Joint Tests
+ 
+                                                             Wald
+                       Effect                    DF    Chi-Square    Pr > ChiSq
+
+                       IW_Tech                    1        5.1899        0.0227
+                       Question_Type              1       99.4969        <.0001
+                       Question_Typ*IW_Tech       1        2.0417        0.1530
+
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+
+
+                               Analysis of Maximum Likelihood Estimates
+ 
+                                                             Standard          Wald
+     Parameter                             DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+     Intercept                              1     -1.8602      0.0696      714.6374        <.0001
+     IW_Tech              Conv              1      0.1585      0.0696        5.1899        0.0227
+     Question_Type        Opinion           1      0.6941      0.0696       99.4969        <.0001
+     Question_Typ*IW_Tech Opinion Conv      1      0.0994      0.0696        2.0417        0.1530
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+               Appendix B: Logistic Regression w/ interaction: Only Coll or More cases              21
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      56.7    Somers' D    0.367
+                          Percent Discordant      20.0    Gamma        0.479
+                          Percent Tied            23.3    Tau-a        0.096
+                          Pairs                 588581    c            0.683
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+             Appendix B: Logistic Regression w/ interaction: Only Some Coll or Less cases           22
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2750
+                               Number of Observations Used        2630
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           423
+                                        2            0          2207
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 120 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+             Appendix B: Logistic Regression w/ interaction: Only Some Coll or Less cases           23
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            2321.946       2195.353
+                                SC             2327.821       2218.852
+                                -2 Log L       2319.946       2187.353
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       132.5926        3         <.0001
+                       Score                  130.0395        3         <.0001
+                       Wald                   118.2462        3         <.0001
+
+
+                                             Joint Tests
+ 
+                                                             Wald
+                       Effect                    DF    Chi-Square    Pr > ChiSq
+
+                       IW_Tech                    1       11.6526        0.0006
+                       Question_Type              1      100.6627        <.0001
+                       Question_Typ*IW_Tech       1        0.0427        0.8363
+
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+
+
+                               Analysis of Maximum Likelihood Estimates
+ 
+                                                             Standard          Wald
+     Parameter                             DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+     Intercept                              1     -1.8010      0.0611      869.3583        <.0001
+     IW_Tech              Conv              1      0.2085      0.0611       11.6526        0.0006
+     Question_Type        Opinion           1      0.6129      0.0611      100.6627        <.0001
+     Question_Typ*IW_Tech Opinion Conv      1     -0.0126      0.0611        0.0427        0.8363
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+             Appendix B: Logistic Regression w/ interaction: Only Some Coll or Less cases           24
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      54.5    Somers' D    0.332
+                          Percent Discordant      21.3    Gamma        0.438
+                          Percent Tied            24.2    Tau-a        0.090
+                          Pairs                 933561    c            0.666
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/ interaction: Only 18-59 cases                 25
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2720
+                               Number of Observations Used        2656
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           414
+                                        2            0          2242
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 64 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/ interaction: Only 18-59 cases                 26
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            2300.839       2183.163
+                                SC             2306.724       2206.701
+                                -2 Log L       2298.839       2175.163
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       123.6765        3         <.0001
+                       Score                  122.0271        3         <.0001
+                       Wald                   111.1012        3         <.0001
+
+
+                                             Joint Tests
+ 
+                                                             Wald
+                       Effect                    DF    Chi-Square    Pr > ChiSq
+
+                       IW_Tech                    1       15.7297        <.0001
+                       Question_Type              1       89.7699        <.0001
+                       Question_Typ*IW_Tech       1        0.0199        0.8879
+
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+
+
+                               Analysis of Maximum Likelihood Estimates
+ 
+                                                             Standard          Wald
+     Parameter                             DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+     Intercept                              1     -1.8356      0.0612      899.6065        <.0001
+     IW_Tech              Conv              1      0.2427      0.0612       15.7297        <.0001
+     Question_Type        Opinion           1      0.5798      0.0612       89.7699        <.0001
+     Question_Typ*IW_Tech Opinion Conv      1    -0.00863      0.0612        0.0199        0.8879
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/ interaction: Only 18-59 cases                 27
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      54.2    Somers' D    0.326
+                          Percent Discordant      21.6    Gamma        0.430
+                          Percent Tied            24.2    Tau-a        0.086
+                          Pairs                 928188    c            0.663
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                    Appendix B: Logistic Regression w/ interaction: Only 60+ cases                  28
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2180
+                               Number of Observations Used        2092
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           338
+                                        2            0          1754
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 88 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                    Appendix B: Logistic Regression w/ interaction: Only 60+ cases                  29
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            1852.419       1714.700
+                                SC             1858.064       1737.283
+                                -2 Log L       1850.419       1706.700
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       143.7190        3         <.0001
+                       Score                  141.6140        3         <.0001
+                       Wald                   125.2713        3         <.0001
+
+
+                                             Joint Tests
+ 
+                                                             Wald
+                       Effect                    DF    Chi-Square    Pr > ChiSq
+
+                       IW_Tech                    1        2.9681        0.0849
+                       Question_Type              1      111.5450        <.0001
+                       Question_Typ*IW_Tech       1        1.9857        0.1588
+
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+
+
+                               Analysis of Maximum Likelihood Estimates
+ 
+                                                             Standard          Wald
+     Parameter                             DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+     Intercept                              1     -1.8219      0.0694      688.4925        <.0001
+     IW_Tech              Conv              1      0.1196      0.0694        2.9681        0.0849
+     Question_Type        Opinion           1      0.7333      0.0694      111.5450        <.0001
+     Question_Typ*IW_Tech Opinion Conv      1      0.0978      0.0694        1.9857        0.1588
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                    Appendix B: Logistic Regression w/ interaction: Only 60+ cases                  30
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      57.2    Somers' D    0.375
+                          Percent Discordant      19.7    Gamma        0.488
+                          Percent Tied            23.1    Tau-a        0.102
+                          Pairs                 592852    c            0.687
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                  Appendix B: Logistic Regression w/ interaction: Only Female cases                 31
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2710
+                               Number of Observations Used        2598
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           415
+                                        2            0          2183
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 112 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                  Appendix B: Logistic Regression w/ interaction: Only Female cases                 32
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            2284.268       2165.077
+                                SC             2290.131       2188.527
+                                -2 Log L       2282.268       2157.077
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       125.1909        3         <.0001
+                       Score                  125.3706        3         <.0001
+                       Wald                   115.2737        3         <.0001
+
+
+                                             Joint Tests
+ 
+                                                             Wald
+                       Effect                    DF    Chi-Square    Pr > ChiSq
+
+                       IW_Tech                    1        6.9745        0.0083
+                       Question_Type              1       96.3589        <.0001
+                       Question_Typ*IW_Tech       1        1.1374        0.2862
+
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+
+
+                               Analysis of Maximum Likelihood Estimates
+ 
+                                                             Standard          Wald
+     Parameter                             DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+     Intercept                              1     -1.7860      0.0598      890.8428        <.0001
+     IW_Tech              Conv              1      0.1580      0.0598        6.9745        0.0083
+     Question_Type        Opinion           1      0.5874      0.0598       96.3589        <.0001
+     Question_Typ*IW_Tech Opinion Conv      1      0.0638      0.0598        1.1374        0.2862
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                  Appendix B: Logistic Regression w/ interaction: Only Female cases                 33
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      54.2    Somers' D    0.323
+                          Percent Discordant      21.9    Gamma        0.424
+                          Percent Tied            23.9    Tau-a        0.087
+                          Pairs                 905945    c            0.662
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/ interaction: Only Male cases                  34
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2190
+                               Number of Observations Used        2150
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           337
+                                        2            0          1813
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 40 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/ interaction: Only Male cases                  35
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            1869.195       1736.309
+                                SC             1874.868       1759.001
+                                -2 Log L       1867.195       1728.309
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       138.8862        3         <.0001
+                       Score                  135.0396        3         <.0001
+                       Wald                   118.3685        3         <.0001
+
+
+                                             Joint Tests
+ 
+                                                             Wald
+                       Effect                    DF    Chi-Square    Pr > ChiSq
+
+                       IW_Tech                    1       11.3408        0.0008
+                       Question_Type              1      102.6909        <.0001
+                       Question_Typ*IW_Tech       1        0.0377        0.8461
+
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+
+
+                               Analysis of Maximum Likelihood Estimates
+ 
+                                                             Standard          Wald
+     Parameter                             DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+     Intercept                              1     -1.8785      0.0711      698.5458        <.0001
+     IW_Tech              Conv              1      0.2394      0.0711       11.3408        0.0008
+     Question_Type        Opinion           1      0.7203      0.0711      102.6909        <.0001
+     Question_Typ*IW_Tech Opinion Conv      1     -0.0138      0.0711        0.0377        0.8461
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/ interaction: Only Male cases                  36
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      57.1    Somers' D    0.378
+                          Percent Discordant      19.3    Gamma        0.494
+                          Percent Tied            23.5    Tau-a        0.100
+                          Pairs                 610981    c            0.689
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+               Appendix B: Logistic Regression w/o interaction: Only Coll or More cases             37
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2150
+                               Number of Observations Used        2118
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           329
+                                        2            0          1789
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 32 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+               Appendix B: Logistic Regression w/o interaction: Only Coll or More cases             38
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            1831.329       1706.143
+                                SC             1836.988       1723.117
+                                -2 Log L       1829.329       1700.143
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       129.1866        2         <.0001
+                       Score                  123.5742        2         <.0001
+                       Wald                   111.2870        2         <.0001
+
+
+                                     Type 3 Analysis of Effects
+ 
+                                                         Wald
+                          Effect             DF    Chi-Square    Pr > ChiSq
+
+                          IW_Tech             1       10.7073        0.0011
+                          Question_Type       1      102.5799        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                      Standard          Wald
+           Parameter                DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+           Intercept                 1     -1.8644      0.0699      712.2409        <.0001
+           IW_Tech       Conv        1      0.2036      0.0622       10.7073        0.0011
+           Question_Type Opinion     1      0.7037      0.0695      102.5799        <.0001
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                        Point          95% Wald
+                 Effect                              Estimate      Confidence Limits
+
+                 IW_Tech       Conv vs Stand            1.503       1.177       1.918
+                 Question_Type Opinion vs Factual       4.086       3.112       5.365
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+               Appendix B: Logistic Regression w/o interaction: Only Coll or More cases             39
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      56.7    Somers' D    0.367
+                          Percent Discordant      20.0    Gamma        0.479
+                          Percent Tied            23.3    Tau-a        0.096
+                          Pairs                 588581    c            0.683
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+            Appendix B: Logistic Regression w/o interaction: Only Some Coll or Less cases           40
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2750
+                               Number of Observations Used        2630
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           423
+                                        2            0          2207
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 120 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+            Appendix B: Logistic Regression w/o interaction: Only Some Coll or Less cases           41
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            2321.946       2193.397
+                                SC             2327.821       2211.021
+                                -2 Log L       2319.946       2187.397
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       132.5491        2         <.0001
+                       Score                  128.4319        2         <.0001
+                       Wald                   118.9020        2         <.0001
+
+
+                                     Type 3 Analysis of Effects
+ 
+                                                         Wald
+                          Effect             DF    Chi-Square    Pr > ChiSq
+
+                          IW_Tech             1       13.1650        0.0003
+                          Question_Type       1      107.3561        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                      Standard          Wald
+           Parameter                DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+           Intercept                 1     -1.7995      0.0605      885.4398        <.0001
+           IW_Tech       Conv        1      0.2036      0.0561       13.1650        0.0003
+           Question_Type Opinion     1      0.6096      0.0588      107.3561        <.0001
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                        Point          95% Wald
+                 Effect                              Estimate      Confidence Limits
+
+                 IW_Tech       Conv vs Stand            1.503       1.206       1.872
+                 Question_Type Opinion vs Factual       3.384       2.687       4.262
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+            Appendix B: Logistic Regression w/o interaction: Only Some Coll or Less cases           42
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      54.5    Somers' D    0.332
+                          Percent Discordant      21.3    Gamma        0.438
+                          Percent Tied            24.2    Tau-a        0.090
+                          Pairs                 933561    c            0.666
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                  Appendix B: Logistic Regression w/o interaction: Only 18-59 cases                 43
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2720
+                               Number of Observations Used        2656
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           414
+                                        2            0          2242
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 64 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                  Appendix B: Logistic Regression w/o interaction: Only 18-59 cases                 44
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            2300.839       2181.183
+                                SC             2306.724       2198.837
+                                -2 Log L       2298.839       2175.183
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       123.6561        2         <.0001
+                       Score                  119.7470        2         <.0001
+                       Wald                   111.6128        2         <.0001
+
+
+                                     Type 3 Analysis of Effects
+ 
+                                                         Wald
+                          Effect             DF    Chi-Square    Pr > ChiSq
+
+                          IW_Tech             1       18.0330        <.0001
+                          Question_Type       1       95.7947        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                      Standard          Wald
+           Parameter                DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+           Intercept                 1     -1.8346      0.0606      915.9052        <.0001
+           IW_Tech       Conv        1      0.2394      0.0564       18.0330        <.0001
+           Question_Type Opinion     1      0.5777      0.0590       95.7947        <.0001
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                        Point          95% Wald
+                 Effect                              Estimate      Confidence Limits
+
+                 IW_Tech       Conv vs Stand            1.614       1.294       2.014
+                 Question_Type Opinion vs Factual       3.175       2.519       4.001
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                  Appendix B: Logistic Regression w/o interaction: Only 18-59 cases                 45
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      54.2    Somers' D    0.326
+                          Percent Discordant      21.6    Gamma        0.430
+                          Percent Tied            24.2    Tau-a        0.086
+                          Pairs                 928188    c            0.663
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/o interaction: Only 60+ cases                  46
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2180
+                               Number of Observations Used        2092
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           338
+                                        2            0          1754
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 88 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/o interaction: Only 60+ cases                  47
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            1852.419       1714.677
+                                SC             1858.064       1731.615
+                                -2 Log L       1850.419       1708.677
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       141.7413        2         <.0001
+                       Score                  135.6022        2         <.0001
+                       Wald                   120.7895        2         <.0001
+
+
+                                     Type 3 Analysis of Effects
+ 
+                                                         Wald
+                          Effect             DF    Chi-Square    Pr > ChiSq
+
+                          IW_Tech             1        7.0707        0.0078
+                          Question_Type       1      115.1182        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                      Standard          Wald
+           Parameter                DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+           Intercept                 1     -1.8259      0.0697      685.9173        <.0001
+           IW_Tech       Conv        1      0.1646      0.0619        7.0707        0.0078
+           Question_Type Opinion     1      0.7433      0.0693      115.1182        <.0001
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                        Point          95% Wald
+                 Effect                              Estimate      Confidence Limits
+
+                 IW_Tech       Conv vs Stand            1.390       1.090       1.771
+                 Question_Type Opinion vs Factual       4.422       3.371       5.802
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/o interaction: Only 60+ cases                  48
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      57.2    Somers' D    0.375
+                          Percent Discordant      19.7    Gamma        0.488
+                          Percent Tied            23.1    Tau-a        0.102
+                          Pairs                 592852    c            0.687
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                  Appendix B: Logistic Regression w/o interaction: Only Female cases                49
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2710
+                               Number of Observations Used        2598
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           415
+                                        2            0          2183
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 112 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                  Appendix B: Logistic Regression w/o interaction: Only Female cases                50
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            2284.268       2164.209
+                                SC             2290.131       2181.797
+                                -2 Log L       2282.268       2158.209
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       124.0591        2         <.0001
+                       Score                  120.4009        2         <.0001
+                       Wald                   111.7441        2         <.0001
+
+
+                                     Type 3 Analysis of Effects
+ 
+                                                         Wald
+                          Effect             DF    Chi-Square    Pr > ChiSq
+
+                          IW_Tech             1       10.6357        0.0011
+                          Question_Type       1      102.2473        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                      Standard          Wald
+           Parameter                DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+           Intercept                 1     -1.7899      0.0600      888.5822        <.0001
+           IW_Tech       Conv        1      0.1818      0.0557       10.6357        0.0011
+           Question_Type Opinion     1      0.5983      0.0592      102.2473        <.0001
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                        Point          95% Wald
+                 Effect                              Estimate      Confidence Limits
+
+                 IW_Tech       Conv vs Stand            1.439       1.156       1.790
+                 Question_Type Opinion vs Factual       3.309       2.624       4.172
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                  Appendix B: Logistic Regression w/o interaction: Only Female cases                51
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      54.2    Somers' D    0.323
+                          Percent Discordant      21.9    Gamma        0.424
+                          Percent Tied            23.9    Tau-a        0.087
+                          Pairs                 905945    c            0.662
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/o interaction: Only Male cases                 52
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        2190
+                               Number of Observations Used        2150
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           337
+                                        2            0          1813
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 40 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                               Design
+                               Class             Value       Variables
+
+                               Question_Type     Factual            -1
+                                                 Opinion             1
+
+                               IW_Tech           Conv                1
+                                                 Stand              -1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/o interaction: Only Male cases                 53
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            1869.195       1734.346
+                                SC             1874.868       1751.366
+                                -2 Log L       1867.195       1728.346
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio       138.8485        2         <.0001
+                       Score                  132.5899        2         <.0001
+                       Wald                   119.0789        2         <.0001
+
+
+                                     Type 3 Analysis of Effects
+ 
+                                                         Wald
+                          Effect             DF    Chi-Square    Pr > ChiSq
+
+                          IW_Tech             1       13.9040        0.0002
+                          Question_Type       1      107.9898        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                      Standard          Wald
+           Parameter                DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+           Intercept                 1     -1.8764      0.0701      715.7889        <.0001
+           IW_Tech       Conv        1      0.2328      0.0624       13.9040        0.0002
+           Question_Type Opinion     1      0.7169      0.0690      107.9898        <.0001
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                        Point          95% Wald
+                 Effect                              Estimate      Confidence Limits
+
+                 IW_Tech       Conv vs Stand            1.593       1.247       2.035
+                 Question_Type Opinion vs Factual       4.195       3.201       5.497
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                   Appendix B: Logistic Regression w/o interaction: Only Male cases                 54
+
+                                        The LOGISTIC Procedure
+
+                     Association of Predicted Probabilities and Observed Responses
+
+                          Percent Concordant      57.1    Somers' D    0.378
+                          Percent Discordant      19.3    Gamma        0.494
+                          Percent Tied            23.5    Tau-a        0.100
+                          Pairs                 610981    c            0.689
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+            Analysis #4: % Response Change by Interviewing Technique for Factual Questions          55
+
+                                          The FREQ Procedure
+
+                                   Table of Resp_Change by IW_Tech
+
+                                 Resp_Change(Indicator of Response Change between Response Provided 
+                                             in Initial Administration and Response Provided in 
+                                             Re-administration: 1=Yes, 0=No)
+                                           IW_Tech(Assigned Re-administration Interviewing Technique: 
+                                                   'Conv' and 'Stand')
+
+                                 Frequency|
+                                 Percent  |
+                                 Row Pct  |
+                                 Col Pct  |Conv    |Stand   |  Total
+                                 ---------+--------+--------+
+                                        0 |   1157 |   1063 |   2220
+                                          |  47.97 |  44.07 |  92.04
+                                          |  52.12 |  47.88 |
+                                          |  90.96 |  93.25 |
+                                 ---------+--------+--------+
+                                        1 |    115 |     77 |    192
+                                          |   4.77 |   3.19 |   7.96
+                                          |  59.90 |  40.10 |
+                                          |   9.04 |   6.75 |
+                                 ---------+--------+--------+
+                                 Total        1272     1140     2412
+                                             52.74    47.26   100.00
+
+                                        Frequency Missing = 38
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+            Analysis #4: % Response Change by Interviewing Technique for Factual Questions          56
+
+                                          The FREQ Procedure
+
+                            Statistics for Table of Resp_Change by IW_Tech
+
+                        Statistic                     DF       Value      Prob
+                        ------------------------------------------------------
+                        Chi-Square                     1      4.2900    0.0383
+                        Likelihood Ratio Chi-Square    1      4.3246    0.0376
+                        Continuity Adj. Chi-Square     1      3.9836    0.0459
+                        Mantel-Haenszel Chi-Square     1      4.2882    0.0384
+                        Phi Coefficient                      -0.0422          
+                        Contingency Coefficient               0.0421          
+                        Cramer's V                           -0.0422          
+
+
+                                         Fisher's Exact Test
+                                  ----------------------------------
+                                  Cell (1,1) Frequency (F)      1157
+                                  Left-sided Pr <= F          0.0227
+                                  Right-sided Pr >= F         0.9844
+                                                                    
+                                  Table Probability (P)       0.0070
+                                  Two-sided Pr <= P           0.0418
+
+                                          Sample Size = 2412
+                                        Frequency Missing = 38
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+            Analysis #5: % Response Change by Interviewing Technique for Opinion Questions          57
+
+                                          The FREQ Procedure
+
+                                   Table of Resp_Change by IW_Tech
+
+                                 Resp_Change(Indicator of Response Change between Response Provided 
+                                             in Initial Administration and Response Provided in 
+                                             Re-administration: 1=Yes, 0=No)
+                                           IW_Tech(Assigned Re-administration Interviewing Technique: 
+                                                   'Conv' and 'Stand')
+
+                                 Frequency|
+                                 Percent  |
+                                 Row Pct  |
+                                 Col Pct  |Conv    |Stand   |  Total
+                                 ---------+--------+--------+
+                                        0 |    893 |    883 |   1776
+                                          |  38.23 |  37.80 |  76.03
+                                          |  50.28 |  49.72 |
+                                          |  72.25 |  80.27 |
+                                 ---------+--------+--------+
+                                        1 |    343 |    217 |    560
+                                          |  14.68 |   9.29 |  23.97
+                                          |  61.25 |  38.75 |
+                                          |  27.75 |  19.73 |
+                                 ---------+--------+--------+
+                                 Total        1236     1100     2336
+                                             52.91    47.09   100.00
+
+                                       Frequency Missing = 114
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+            Analysis #5: % Response Change by Interviewing Technique for Opinion Questions          58
+
+                                          The FREQ Procedure
+
+                            Statistics for Table of Resp_Change by IW_Tech
+
+                        Statistic                     DF       Value      Prob
+                        ------------------------------------------------------
+                        Chi-Square                     1     20.5582    <.0001
+                        Likelihood Ratio Chi-Square    1     20.7282    <.0001
+                        Continuity Adj. Chi-Square     1     20.1203    <.0001
+                        Mantel-Haenszel Chi-Square     1     20.5494    <.0001
+                        Phi Coefficient                      -0.0938          
+                        Contingency Coefficient               0.0934          
+                        Cramer's V                           -0.0938          
+
+
+                                         Fisher's Exact Test
+                                  ----------------------------------
+                                  Cell (1,1) Frequency (F)       893
+                                  Left-sided Pr <= F          <.0001
+                                  Right-sided Pr >= F         1.0000
+                                                                    
+                                  Table Probability (P)       <.0001
+                                  Two-sided Pr <= P           <.0001
+
+                                          Sample Size = 2336
+                                       Frequency Missing = 114
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+               Analysis #6a: Mean % Response Change by Iw Tech and NV Sensitivity Group             59
+
+                                         The MEANS Procedure
+
+        Analysis Variable : Resp_Change Indicator of Response Change between Response Provided
+          in Initial Administration and Response Provided in Re-administration: 1=Yes, 0=No
+ 
+      Interviewer Audio
+      PONS Group
+      Crossed with
+      Re-administration
+      Interviewing
+      Technique:
+      'Stand', 'Hi -          N                                       Lower 95%       Upper 95%
+      CI', 'Lo - CI'        Obs            Mean       Std Error     CL for Mean     CL for Mean
+      -----------------------------------------------------------------------------------------
+      High - CI             860           0.184           0.013           0.157           0.210
+
+      Lo - CI              1090           0.179           0.012           0.156           0.202
+
+      Stand                1770           0.126           0.008           0.111           0.142
+      -----------------------------------------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                            Reference group: Low NV Sensitivity - Conv Iw                           60
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        4900
+                               Number of Observations Used        3608
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           559
+                                        2            0          3049
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 1292 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                            Design
+                                  Class     Value         Variables
+
+                                  Group     High - CI      1      0
+                                            Lo - CI        0      0
+                                            Stand          0      1
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                            Reference group: Low NV Sensitivity - Conv Iw                           61
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            3113.338       3096.552
+                                SC             3119.529       3115.125
+                                -2 Log L       3111.338       3090.552
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio        20.7861        2         <.0001
+                       Score                   20.6080        2         <.0001
+                       Wald                    20.4104        2         <.0001
+
+
+                                      Type 3 Analysis of Effects
+ 
+                                                      Wald
+                              Effect      DF    Chi-Square    Pr > ChiSq
+
+                              Group        2       20.4104        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                     Standard          Wald
+            Parameter              DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+            Intercept               1     -1.5246      0.0807      356.9763        <.0001
+            Group     High - CI     1      0.0329      0.1201        0.0750        0.7842
+            Group     Stand         1     -0.4092      0.1086       14.2097        0.0002
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                     Point          95% Wald
+                    Effect                        Estimate      Confidence Limits
+
+                    Group High - CI vs Lo - CI       1.033       0.817       1.308
+                    Group Stand     vs Lo - CI       0.664       0.537       0.822
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                            Reference group: Low NV Sensitivity - Conv Iw                           62
+
+                                        The LOGISTIC Procedure
+
+                    Association of Predicted Probabilities and Observed Responses
+
+                         Percent Concordant       37.9    Somers' D    0.107
+                         Percent Discordant       27.3    Gamma        0.164
+                         Percent Tied             34.8    Tau-a        0.028
+                         Pairs                 1704391    c            0.553
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                                   Reference group: Standardized Iw                                 63
+
+                                        The LOGISTIC Procedure
+
+                                          Model Information
+
+Data Set                   CONV.PUF_QUESTION_LEVEL                                                    
+Response Variable          Resp_Change              Indicator of Response Change between Response     
+                                                    Provided in Initial Administration and Response   
+                                                    Provided in Re-administration: 1=Yes, 0=No        
+Number of Response Levels  2                                                                          
+Model                      binary logit                                                               
+Optimization Technique     Fisher's scoring                                                           
+
+
+                               Number of Observations Read        4900
+                               Number of Observations Used        3608
+
+
+                                           Response Profile
+ 
+                                  Ordered     Resp_            Total
+                                    Value     Change       Frequency
+
+                                        1            1           559
+                                        2            0          3049
+
+                                Probability modeled is Resp_Change=1.
+
+NOTE: 1292 observations were deleted due to missing values for the response or explanatory variables.
+
+
+                                       Class Level Information
+ 
+                                                            Design
+                                  Class     Value         Variables
+
+                                  Group     High - CI      1      0
+                                            Lo - CI        0      1
+                                            Stand          0      0
+
+
+                                       Model Convergence Status
+
+                            Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                                   Reference group: Standardized Iw                                 64
+
+                                        The LOGISTIC Procedure
+
+                                         Model Fit Statistics
+ 
+                                                             Intercept
+                                              Intercept            and
+                                Criterion          Only     Covariates
+
+                                AIC            3113.338       3096.552
+                                SC             3119.529       3115.125
+                                -2 Log L       3111.338       3090.552
+
+
+                               Testing Global Null Hypothesis: BETA=0
+ 
+                       Test                 Chi-Square       DF     Pr > ChiSq
+
+                       Likelihood Ratio        20.7861        2         <.0001
+                       Score                   20.6080        2         <.0001
+                       Wald                    20.4104        2         <.0001
+
+
+                                      Type 3 Analysis of Effects
+ 
+                                                      Wald
+                              Effect      DF    Chi-Square    Pr > ChiSq
+
+                              Group        2       20.4104        <.0001
+
+
+                              Analysis of Maximum Likelihood Estimates
+ 
+                                                     Standard          Wald
+            Parameter              DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+            Intercept               1     -1.9339      0.0726      709.1023        <.0001
+            Group     High - CI     1      0.4421      0.1148       14.8338        0.0001
+            Group     Lo - CI       1      0.4092      0.1086       14.2097        0.0002
+
+
+                                         Odds Ratio Estimates
+                                                   
+                                                    Point          95% Wald
+                     Effect                      Estimate      Confidence Limits
+
+                     Group High - CI vs Stand       1.556       1.242       1.949
+                     Group Lo - CI   vs Stand       1.506       1.217       1.863
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                                   Reference group: Standardized Iw                                 65
+
+                                        The LOGISTIC Procedure
+
+                    Association of Predicted Probabilities and Observed Responses
+
+                         Percent Concordant       37.9    Somers' D    0.107
+                         Percent Discordant       27.3    Gamma        0.164
+                         Percent Tied             34.8    Tau-a        0.028
+                         Pairs                 1704391    c            0.553
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis 7 (Table 2): Type of Definition Provided in Conversational Interviews by level of NV Sensi 66
+
+                                          The FREQ Procedure
+
+                                      Table of AUD by Def_Given
+
+                                 AUD(Interviewer Audio PONS Group)
+                                           Def_Given(Interviewer Provided Definition: 1=Yes, 0 = No, 
+                                                     .= Question not asked)
+
+                                 Frequency|
+                                 Percent  |
+                                 Row Pct  |
+                                 Col Pct  |       0|       1|  Total
+                                 ---------+--------+--------+
+                                 High     |    498 |    242 |    740
+                                          |  27.82 |  13.52 |  41.34
+                                          |  67.30 |  32.70 |
+                                          |  44.78 |  35.69 |
+                                 ---------+--------+--------+
+                                 Low      |    614 |    436 |   1050
+                                          |  34.30 |  24.36 |  58.66
+                                          |  58.48 |  41.52 |
+                                          |  55.22 |  64.31 |
+                                 ---------+--------+--------+
+                                 Total        1112      678     1790
+                                             62.12    37.88   100.00
+
+                                       Frequency Missing = 790
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis 7 (Table 2): Type of Definition Provided in Conversational Interviews by level of NV Sensi 67
+
+                                          The FREQ Procedure
+
+                               Statistics for Table of AUD by Def_Given
+
+                        Statistic                     DF       Value      Prob
+                        ------------------------------------------------------
+                        Chi-Square                     1     14.3544    0.0002
+                        Likelihood Ratio Chi-Square    1     14.4577    0.0001
+                        Continuity Adj. Chi-Square     1     13.9820    0.0002
+                        Mantel-Haenszel Chi-Square     1     14.3464    0.0002
+                        Phi Coefficient                       0.0896          
+                        Contingency Coefficient               0.0892          
+                        Cramer's V                            0.0896          
+
+
+                                         Fisher's Exact Test
+                                  ----------------------------------
+                                  Cell (1,1) Frequency (F)       498
+                                  Left-sided Pr <= F          0.9999
+                                  Right-sided Pr >= F         <.0001
+                                                                    
+                                  Table Probability (P)       <.0001
+                                  Two-sided Pr <= P           0.0002
+
+                                          Sample Size = 1790
+                                       Frequency Missing = 790
+
+                                WARNING: 31% of the data are missing.
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis 7 (Table 2): Type of Definition Provided in Conversational Interviews by level of NV Sensi 68
+
+                                          The FREQ Procedure
+
+                                     Table of AUD by Preemp_Given
+
+                                 AUD(Interviewer Audio PONS Group)
+                                           Preemp_Given(Interviewer Provided Pre-emptive Strike 
+                                                        Definition: 1=Yes, 0 = No, .= Question not 
+                                                        asked)
+
+                                 Frequency|
+                                 Percent  |
+                                 Row Pct  |
+                                 Col Pct  |       0|       1|  Total
+                                 ---------+--------+--------+
+                                 High     |    733 |      7 |    740
+                                          |  40.95 |   0.39 |  41.34
+                                          |  99.05 |   0.95 |
+                                          |  45.33 |   4.05 |
+                                 ---------+--------+--------+
+                                 Low      |    884 |    166 |   1050
+                                          |  49.39 |   9.27 |  58.66
+                                          |  84.19 |  15.81 |
+                                          |  54.67 |  95.95 |
+                                 ---------+--------+--------+
+                                 Total        1617      173     1790
+                                             90.34     9.66   100.00
+
+                                       Frequency Missing = 790
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis 7 (Table 2): Type of Definition Provided in Conversational Interviews by level of NV Sensi 69
+
+                                          The FREQ Procedure
+
+                             Statistics for Table of AUD by Preemp_Given
+
+                        Statistic                     DF       Value      Prob
+                        ------------------------------------------------------
+                        Chi-Square                     1    109.8410    <.0001
+                        Likelihood Ratio Chi-Square    1    141.3753    <.0001
+                        Continuity Adj. Chi-Square     1    108.1452    <.0001
+                        Mantel-Haenszel Chi-Square     1    109.7797    <.0001
+                        Phi Coefficient                       0.2477          
+                        Contingency Coefficient               0.2404          
+                        Cramer's V                            0.2477          
+
+
+                                         Fisher's Exact Test
+                                  ----------------------------------
+                                  Cell (1,1) Frequency (F)       733
+                                  Left-sided Pr <= F          1.0000
+                                  Right-sided Pr >= F         <.0001
+                                                                    
+                                  Table Probability (P)       <.0001
+                                  Two-sided Pr <= P           <.0001
+
+                                          Sample Size = 1790
+                                       Frequency Missing = 790
+
+                                WARNING: 31% of the data are missing.
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis 7 (Table 2): Type of Definition Provided in Conversational Interviews by level of NV Sensi 70
+
+                                          The FREQ Procedure
+
+                                    Table of AUD by Respdef_Given
+
+                                 AUD(Interviewer Audio PONS Group)
+                                           Respdef_Given(Interviewer Provided Responsive Definition: 
+                                                         1=Yes, 0 = No, .= Question not asked)
+
+                                 Frequency|
+                                 Percent  |
+                                 Row Pct  |
+                                 Col Pct  |       0|       1|  Total
+                                 ---------+--------+--------+
+                                 High     |    505 |    235 |    740
+                                          |  28.21 |  13.13 |  41.34
+                                          |  68.24 |  31.76 |
+                                          |  39.30 |  46.53 |
+                                 ---------+--------+--------+
+                                 Low      |    780 |    270 |   1050
+                                          |  43.58 |  15.08 |  58.66
+                                          |  74.29 |  25.71 |
+                                          |  60.70 |  53.47 |
+                                 ---------+--------+--------+
+                                 Total        1285      505     1790
+                                             71.79    28.21   100.00
+
+                                       Frequency Missing = 790
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis 7 (Table 2): Type of Definition Provided in Conversational Interviews by level of NV Sensi 71
+
+                                          The FREQ Procedure
+
+                             Statistics for Table of AUD by Respdef_Given
+
+                        Statistic                     DF       Value      Prob
+                        ------------------------------------------------------
+                        Chi-Square                     1      7.8254    0.0052
+                        Likelihood Ratio Chi-Square    1      7.7787    0.0053
+                        Continuity Adj. Chi-Square     1      7.5299    0.0061
+                        Mantel-Haenszel Chi-Square     1      7.8211    0.0052
+                        Phi Coefficient                      -0.0661          
+                        Contingency Coefficient               0.0660          
+                        Cramer's V                           -0.0661          
+
+
+                                         Fisher's Exact Test
+                                  ----------------------------------
+                                  Cell (1,1) Frequency (F)       505
+                                  Left-sided Pr <= F          0.0031
+                                  Right-sided Pr >= F         0.9978
+                                                                    
+                                  Table Probability (P)       0.0009
+                                  Two-sided Pr <= P           0.0056
+
+                                          Sample Size = 1790
+                                       Frequency Missing = 790
+
+                                WARNING: 31% of the data are missing.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis 8: % Response Change Provided in Conversational interviews by Low NV Sensitivity Interview 72
+
+                                          The FREQ Procedure
+
+                                   Table of Resp_Change by Def_Type
+
+                                 Resp_Change(Indicator of Response Change between Response Provided 
+                                             in Initial Administration and Response Provided in 
+                                             Re-administration: 1=Yes, 0=No)
+                                           Def_Type(Type of Definition Given by Interview: 'No Def 
+                                                    Given', 'Preemptive Str', 'Responsive Def')
+
+                                 Frequency|
+                                 Percent  |
+                                 Row Pct  |
+                                 Col Pct  |Preempti|Responsi|  Total
+                                          |ve Str  |ve Def  |
+                                 ---------+--------+--------+
+                                        0 |    121 |    167 |    288
+                                          |  29.02 |  40.05 |  69.06
+                                          |  42.01 |  57.99 |
+                                          |  75.63 |  64.98 |
+                                 ---------+--------+--------+
+                                        1 |     39 |     90 |    129
+                                          |   9.35 |  21.58 |  30.94
+                                          |  30.23 |  69.77 |
+                                          |  24.38 |  35.02 |
+                                 ---------+--------+--------+
+                                 Total         160      257      417
+                                             38.37    61.63   100.00
+
+                                        Frequency Missing = 59
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+Analysis 8: % Response Change Provided in Conversational interviews by Low NV Sensitivity Interview 73
+
+                                          The FREQ Procedure
+
+                           Statistics for Table of Resp_Change by Def_Type
+
+                        Statistic                     DF       Value      Prob
+                        ------------------------------------------------------
+                        Chi-Square                     1      5.2294    0.0222
+                        Likelihood Ratio Chi-Square    1      5.3311    0.0209
+                        Continuity Adj. Chi-Square     1      4.7431    0.0294
+                        Mantel-Haenszel Chi-Square     1      5.2169    0.0224
+                        Phi Coefficient                       0.1120          
+                        Contingency Coefficient               0.1113          
+                        Cramer's V                            0.1120          
+
+
+                                         Fisher's Exact Test
+                                  ----------------------------------
+                                  Cell (1,1) Frequency (F)       121
+                                  Left-sided Pr <= F          0.9922
+                                  Right-sided Pr >= F         0.0141
+                                                                    
+                                  Table Probability (P)       0.0063
+                                  Two-sided Pr <= P           0.0226
+
+                                          Sample Size = 417
+                                        Frequency Missing = 59
+
+                                WARNING: 12% of the data are missing.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                      Non-normality of Re-administration Section timing variable                    74
+
+                                       The UNIVARIATE Procedure
+                 Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+
+                                               Moments
+
+                   N                         449    Sum Weights                449
+                   Mean               2.94729895    Sum Observations    1323.33723
+                   Std Deviation      1.01906284    Variance            1.03848908
+                   Skewness           1.55077795    Kurtosis            3.19283158
+                   Uncorrected SS     4365.51354    Corrected SS        465.243107
+                   Coeff Variation    34.5761614    Std Error Mean      0.04809255
+
+
+                                      Basic Statistical Measures
+ 
+                            Location                    Variability
+
+                        Mean     2.947299     Std Deviation            1.01906
+                        Median   2.648950     Variance                 1.03849
+                        Mode     2.452620     Range                    6.66638
+                                              Interquartile Range      1.14270
+
+                Note: The mode displayed is the smallest of 3 modes with a count of 2.
+
+
+                                      Tests for Location: Mu0=0
+ 
+                           Test           -Statistic-    -----p Value------
+
+                           Student's t    t   61.2839    Pr > |t|    <.0001
+                           Sign           M     224.5    Pr >= |M|   <.0001
+                           Signed Rank    S   50512.5    Pr >= |S|   <.0001
+
+
+                                         Tests for Normality
+ 
+                      Test                  --Statistic---    -----p Value------
+
+                      Shapiro-Wilk          W     0.872714    Pr < W     <0.0001
+                      Kolmogorov-Smirnov    D      0.13193    Pr > D     <0.0100
+                      Cramer-von Mises      W-Sq  2.654354    Pr > W-Sq  <0.0050
+                      Anderson-Darling      A-Sq  15.30479    Pr > A-Sq  <0.0050
+
+
+                                       Quantiles (Definition 5)
+ 
+                                        Level         Quantile
+
+                                        100% Max       8.21510
+                                        99%            6.18693
+                                        95%            4.98852
+                                        90%            4.36220
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+                      Non-normality of Re-administration Section timing variable                    75
+
+                                       The UNIVARIATE Procedure
+                 Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+
+                                       Quantiles (Definition 5)
+ 
+                                        Level         Quantile
+
+                                        75% Q3         3.35103
+                                        50% Median     2.64895
+                                        25% Q1         2.20833
+                                        10%            1.97682
+                                        5%             1.86798
+                                        1%             1.64923
+                                        0% Min         1.54872
+
+
+                                         Extreme Observations
+ 
+                              ------Lowest-----        -----Highest-----
+ 
+                                 Value      Obs           Value      Obs
+
+                               1.54872      244         6.18693       85
+                               1.63855      170         6.22427      212
+                               1.64818       78         6.57058      328
+                               1.64847      132         7.96825      346
+                               1.64923      418         8.21510      135
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+         Non-normality of Re-administration Section Timing Variable by Interviewing Technique       76
+
+                                       The UNIVARIATE Procedure
+                 Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                            IW_Tech = Conv
+
+                                               Moments
+
+                   N                         238    Sum Weights                238
+                   Mean               3.42379723    Sum Observations     814.86374
+                   Std Deviation      1.09851189    Variance            1.20672837
+                   Skewness           1.21382618    Kurtosis            2.03917041
+                   Uncorrected SS     3075.92284    Corrected SS        285.994623
+                   Coeff Variation    32.0846071    Std Error Mean      0.07120595
+
+
+                                      Basic Statistical Measures
+ 
+                            Location                    Variability
+
+                        Mean     3.423797     Std Deviation            1.09851
+                        Median   3.136435     Variance                 1.20673
+                        Mode      .           Range                    6.56663
+                                              Interquartile Range      1.43177
+
+
+                                      Tests for Location: Mu0=0
+ 
+                           Test           -Statistic-    -----p Value------
+
+                           Student's t    t  48.08302    Pr > |t|    <.0001
+                           Sign           M       119    Pr >= |M|   <.0001
+                           Signed Rank    S   14220.5    Pr >= |S|   <.0001
+
+
+                                         Tests for Normality
+ 
+                      Test                  --Statistic---    -----p Value------
+
+                      Shapiro-Wilk          W     0.919149    Pr < W     <0.0001
+                      Kolmogorov-Smirnov    D     0.114553    Pr > D     <0.0100
+                      Cramer-von Mises      W-Sq  0.841702    Pr > W-Sq  <0.0050
+                      Anderson-Darling      A-Sq  4.895453    Pr > A-Sq  <0.0050
+
+
+                                       Quantiles (Definition 5)
+ 
+                                        Level         Quantile
+
+                                        100% Max       8.21510
+                                        99%            6.57058
+                                        95%            5.60390
+                                        90%            4.97405
+                                        75% Q3         4.05572
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+         Non-normality of Re-administration Section Timing Variable by Interviewing Technique       77
+
+                                       The UNIVARIATE Procedure
+                 Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                            IW_Tech = Conv
+
+                                       Quantiles (Definition 5)
+ 
+                                        Level         Quantile
+
+                                        50% Median     3.13644
+                                        25% Q1         2.62395
+                                        10%            2.30908
+                                        5%             2.04287
+                                        1%             1.66740
+                                        0% Min         1.64847
+
+
+                                         Extreme Observations
+ 
+                              ------Lowest-----        -----Highest-----
+ 
+                                 Value      Obs           Value      Obs
+
+                               1.64847      132         6.18693       85
+                               1.64923      418         6.22427      212
+                               1.66740       30         6.57058      328
+                               1.75682      408         7.96825      346
+                               1.89335      198         8.21510      135
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+         Non-normality of Re-administration Section Timing Variable by Interviewing Technique       78
+
+                                       The UNIVARIATE Procedure
+                 Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                           IW_Tech = Stand
+
+                                               Moments
+
+                   N                         211    Sum Weights                211
+                   Mean               2.40982697    Sum Observations     508.47349
+                   Std Deviation      0.55316223    Variance            0.30598846
+                   Skewness           1.57974378    Kurtosis            3.30620419
+                   Uncorrected SS      1289.5907    Corrected SS        64.2575761
+                   Coeff Variation    22.9544379    Std Error Mean      0.03808126
+
+
+                                      Basic Statistical Measures
+ 
+                            Location                    Variability
+
+                        Mean     2.409827     Std Deviation            0.55316
+                        Median   2.277330     Variance                 0.30599
+                        Mode     2.452620     Range                    3.27968
+                                              Interquartile Range      0.59840
+
+                Note: The mode displayed is the smallest of 2 modes with a count of 2.
+
+
+                                      Tests for Location: Mu0=0
+ 
+                           Test           -Statistic-    -----p Value------
+
+                           Student's t    t  63.28118    Pr > |t|    <.0001
+                           Sign           M     105.5    Pr >= |M|   <.0001
+                           Signed Rank    S     11183    Pr >= |S|   <.0001
+
+
+                                         Tests for Normality
+ 
+                      Test                  --Statistic---    -----p Value------
+
+                      Shapiro-Wilk          W     0.879311    Pr < W     <0.0001
+                      Kolmogorov-Smirnov    D     0.118405    Pr > D     <0.0100
+                      Cramer-von Mises      W-Sq  1.038777    Pr > W-Sq  <0.0050
+                      Anderson-Darling      A-Sq   6.24656    Pr > A-Sq  <0.0050
+
+
+                                       Quantiles (Definition 5)
+ 
+                                        Level         Quantile
+
+                                        100% Max       4.82840
+                                        99%            4.42493
+                                        95%            3.50758
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+______________________________________________________________________________________________________
+ 
+         Non-normality of Re-administration Section Timing Variable by Interviewing Technique       79
+
+                                       The UNIVARIATE Procedure
+                 Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                           IW_Tech = Stand
+
+                                       Quantiles (Definition 5)
+ 
+                                        Level         Quantile
+
+                                        90%            3.13073
+                                        75% Q3         2.62968
+                                        50% Median     2.27733
+                                        25% Q1         2.03128
+                                        10%            1.89583
+                                        5%             1.74583
+                                        1%             1.64818
+                                        0% Min         1.54872
+
+
+                                         Extreme Observations
+ 
+                              ------Lowest-----        -----Highest-----
+ 
+                                 Value      Obs           Value      Obs
+
+                               1.54872      244         4.06297        2
+                               1.63855      170         4.29035        7
+                               1.64818       78         4.42493       15
+                               1.65807      433         4.50425      145
+                               1.67682      204         4.82840      282
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                         Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+                            Mean Re-adminstration Section Timing (in Minutes) by Interviewing Technique                           80
+
+                                                        The MEANS Procedure
+
+                             Analysis Variable : TIMEF Readministration Section F Timings (in Minutes)
+ 
+                   Assigned
+                   Readministration
+                   Interviewing          N
+                   Technique           Obs      N            Mean         Std Dev         Minimum         Maximum
+                   ----------------------------------------------------------------------------------------------
+                   Conv                238    238       3.4237972       1.0985119       1.6484700       8.2151000
+
+                   Stand               211    211       2.4098270       0.5531622       1.5487200       4.8284000
+                   ----------------------------------------------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+                                               Check equality of variances for timef                                              81
+
+                                                         The GLM Procedure
+
+                                                      Class Level Information
+ 
+                                       Class               Levels    Values
+
+                                       Duration_Group           3    High - CI Lo - CI Stand 
+
+
+                                              Number of Observations Read         341
+                                              Number of Observations Used         341
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+                                               Check equality of variances for timef                                              82
+
+                                                         The GLM Procedure
+ 
+                            Dependent Variable: TIMEF   Readministration Section F Timings (in Minutes)
+
+                                                                Sum of
+                        Source                      DF         Squares     Mean Square    F Value    Pr > F
+
+                        Model                        2      73.6165025      36.8082513      56.31    <.0001
+
+                        Error                      338     220.9255536       0.6536259                     
+
+                        Corrected Total            340     294.5420561                                     
+
+
+                                         R-Square     Coeff Var      Root MSE    TIMEF Mean
+
+                                         0.249935      28.33894      0.808471      2.852864
+
+
+                        Source                      DF       Type I SS     Mean Square    F Value    Pr > F
+
+                        Duration_Group               2     73.61650251     36.80825126      56.31    <.0001
+
+
+                        Source                      DF     Type III SS     Mean Square    F Value    Pr > F
+
+                        Duration_Group               2     73.61650251     36.80825126      56.31    <.0001
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+                                               Check equality of variances for timef                                              83
+
+                                                         The GLM Procedure
+
+                                          Levene's Test for Homogeneity of TIMEF Variance
+                                           ANOVA of Squared Deviations from Group Means
+ 
+                                                             Sum of        Mean
+                               Source                DF     Squares      Square    F Value    Pr > F
+
+                               Duration_Group         2     55.5884     27.7942      11.56    <.0001
+                               Error                338       813.0      2.4053                     
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+                                               Check equality of variances for timef                                              84
+
+                                                         The GLM Procedure
+
+                                      Level of                   ------------TIMEF------------
+                                      Duration_Group       N             Mean          Std Dev
+
+                                      High - CI           81       2.99168469       0.76026182
+                                      Lo - CI             97       3.48973381       1.13184072
+                                      Stand              163       2.40488264       0.56494085
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+           Analysis #3: Statistical Test of Mean Re-administration Section Timing (in Minutes) by Interviewing Technique          85
+    Wilcoxson Mann-Whitney Test nonparametric test because groups do not have equal variances and data not normally distributed
+
+                                                       The NPAR1WAY Procedure
+
+                                          Wilcoxon Scores (Rank Sums) for Variable TIMEF
+                                                  Classified by Variable IW_Tech
+ 
+                                                     Sum of      Expected       Std Dev          Mean
+                              IW_Tech       N        Scores      Under H0      Under H0         Score
+
+                              Conv        238      69744.50       53550.0    1372.28810    293.044118
+                              Stand       211      31280.50       47475.0    1372.28810    148.248815
+
+                                                Average scores were used for ties.
+
+
+                                                      Wilcoxon Two-Sample Test
+ 
+                                                                                  t Approximation
+                                  Statistic           Z    Pr < Z    Pr > |Z|    Pr < Z  Pr > |Z|
+
+                                   31280.50    -11.8007    <.0001      <.0001    <.0001    <.0001
+
+                                             Z includes a continuity correction of 0.5.
+
+
+                                                         Kruskal-Wallis Test
+ 
+                                                 Chi-Square        DF    Pr > ChiSq
+
+                                                   139.2658         1        <.0001
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low NV Sensitivity 86
+
+                                                      The UNIVARIATE Procedure
+                                Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                                     Duration_Group = High - CI
+
+                                                              Moments
+
+                                  N                          81    Sum Weights                 81
+                                  Mean               2.99168469    Sum Observations     242.32646
+                                  Std Deviation      0.76026182    Variance            0.57799804
+                                  Skewness            0.9161393    Kurtosis            1.24654526
+                                  Uncorrected SS     771.204204    Corrected SS        46.2398433
+                                  Coeff Variation    25.4124984    Std Error Mean      0.08447354
+
+
+                                                     Basic Statistical Measures
+ 
+                                           Location                    Variability
+
+                                       Mean     2.991685     Std Deviation            0.76026
+                                       Median   2.913480     Variance                 0.57800
+                                       Mode      .           Range                    3.81686
+                                                             Interquartile Range      0.78286
+
+
+                                                     Tests for Location: Mu0=0
+ 
+                                          Test           -Statistic-    -----p Value------
+
+                                          Student's t    t  35.41564    Pr > |t|    <.0001
+                                          Sign           M      40.5    Pr >= |M|   <.0001
+                                          Signed Rank    S    1660.5    Pr >= |S|   <.0001
+
+
+                                                        Tests for Normality
+ 
+                                     Test                  --Statistic---    -----p Value------
+
+                                     Shapiro-Wilk          W     0.946403    Pr < W      0.0020
+                                     Kolmogorov-Smirnov    D     0.102592    Pr > D      0.0346
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low NV Sensitivity 87
+
+                                                      The UNIVARIATE Procedure
+                                Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                                     Duration_Group = High - CI
+
+                                                        Tests for Normality
+ 
+                                     Test                  --Statistic---    -----p Value------
+
+                                     Cramer-von Mises      W-Sq  0.200913    Pr > W-Sq  <0.0050
+                                     Anderson-Darling      A-Sq  1.220335    Pr > A-Sq  <0.0050
+
+
+                                                      Quantiles (Definition 5)
+ 
+                                                       Level         Quantile
+
+                                                       100% Max       5.46533
+                                                       99%            5.46533
+                                                       95%            4.60598
+                                                       90%            3.89825
+                                                       75% Q3         3.31018
+                                                       50% Median     2.91348
+                                                       25% Q1         2.52732
+                                                       10%            2.20262
+                                                       5%             2.00107
+                                                       1%             1.64847
+                                                       0% Min         1.64847
+
+
+                                                        Extreme Observations
+ 
+                                             ------Lowest-----        -----Highest-----
+ 
+                                                Value      Obs           Value      Obs
+
+                                              1.64847      132         4.60598      294
+                                              1.64923      418         4.70882      322
+                                              1.66740       30         4.85287      158
+                                              1.75682      408         5.03592      382
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low NV Sensitivity 88
+
+                                                      The UNIVARIATE Procedure
+                                Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                                     Duration_Group = High - CI
+
+                                                        Extreme Observations
+ 
+                                             ------Lowest-----        -----Highest-----
+ 
+                                                Value      Obs           Value      Obs
+
+                                              2.00107      189         5.46533      174
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low NV Sensitivity 89
+
+                                                      The UNIVARIATE Procedure
+                                Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                                      Duration_Group = Lo - CI
+
+                                                              Moments
+
+                                  N                          97    Sum Weights                 97
+                                  Mean               3.48973381    Sum Observations     338.50418
+                                  Std Deviation      1.13184072    Variance            1.28106341
+                                  Skewness           1.22865652    Kurtosis            2.34438882
+                                  Uncorrected SS     1304.27157    Corrected SS        122.982087
+                                  Coeff Variation    32.4334398    Std Error Mean      0.11492101
+
+
+                                                     Basic Statistical Measures
+ 
+                                           Location                    Variability
+
+                                       Mean     3.489734     Std Deviation            1.13184
+                                       Median   3.207320     Variance                 1.28106
+                                       Mode      .           Range                    6.32175
+                                                             Interquartile Range      1.47653
+
+
+                                                     Tests for Location: Mu0=0
+ 
+                                          Test           -Statistic-    -----p Value------
+
+                                          Student's t    t  30.36637    Pr > |t|    <.0001
+                                          Sign           M      48.5    Pr >= |M|   <.0001
+                                          Signed Rank    S    2376.5    Pr >= |S|   <.0001
+
+
+                                                        Tests for Normality
+ 
+                                     Test                  --Statistic---    -----p Value------
+
+                                     Shapiro-Wilk          W     0.918149    Pr < W     <0.0001
+                                     Kolmogorov-Smirnov    D     0.107974    Pr > D     <0.0100
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low NV Sensitivity 90
+
+                                                      The UNIVARIATE Procedure
+                                Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                                      Duration_Group = Lo - CI
+
+                                                        Tests for Normality
+ 
+                                     Test                  --Statistic---    -----p Value------
+
+                                     Cramer-von Mises      W-Sq  0.256164    Pr > W-Sq  <0.0050
+                                     Anderson-Darling      A-Sq  1.666597    Pr > A-Sq  <0.0050
+
+
+                                                      Quantiles (Definition 5)
+ 
+                                                       Level         Quantile
+
+                                                       100% Max       8.21510
+                                                       99%            8.21510
+                                                       95%            5.60390
+                                                       90%            5.11747
+                                                       75% Q3         4.12055
+                                                       50% Median     3.20732
+                                                       25% Q1         2.64402
+                                                       10%            2.26590
+                                                       5%             2.04287
+                                                       1%             1.89335
+                                                       0% Min         1.89335
+
+
+                                                        Extreme Observations
+ 
+                                             ------Lowest-----        -----Highest-----
+ 
+                                                Value      Obs           Value      Obs
+
+                                              1.89335      198         5.60390      356
+                                              2.01195      310         5.61537      430
+                                              2.02810       62         5.97520       65
+                                              2.04088      180         6.57058      328
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low NV Sensitivity 91
+
+                                                      The UNIVARIATE Procedure
+                                Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                                      Duration_Group = Lo - CI
+
+                                                        Extreme Observations
+ 
+                                             ------Lowest-----        -----Highest-----
+ 
+                                                Value      Obs           Value      Obs
+
+                                              2.04287      240         8.21510      135
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low NV Sensitivity 92
+
+                                                      The UNIVARIATE Procedure
+                                Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                                       Duration_Group = Stand
+
+                                                              Moments
+
+                                  N                         163    Sum Weights                163
+                                  Mean               2.40488264    Sum Observations     391.99587
+                                  Std Deviation      0.56494085    Variance            0.31915817
+                                  Skewness           1.53444074    Kurtosis             3.1283039
+                                  Uncorrected SS     994.407685    Corrected SS        51.7036233
+                                  Coeff Variation    23.4914106    Std Error Mean      0.04424958
+
+
+                                                     Basic Statistical Measures
+ 
+                                           Location                    Variability
+
+                                       Mean     2.404883     Std Deviation            0.56494
+                                       Median   2.257780     Variance                 0.31916
+                                       Mode     2.452620     Range                    3.27968
+                                                             Interquartile Range      0.58655
+
+
+                                                     Tests for Location: Mu0=0
+ 
+                                          Test           -Statistic-    -----p Value------
+
+                                          Student's t    t  54.34814    Pr > |t|    <.0001
+                                          Sign           M      81.5    Pr >= |M|   <.0001
+                                          Signed Rank    S      6683    Pr >= |S|   <.0001
+
+
+                                                        Tests for Normality
+ 
+                                     Test                  --Statistic---    -----p Value------
+
+                                     Shapiro-Wilk          W     0.884447    Pr < W     <0.0001
+                                     Kolmogorov-Smirnov    D     0.117893    Pr > D     <0.0100
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low NV Sensitivity 93
+
+                                                      The UNIVARIATE Procedure
+                                Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                                       Duration_Group = Stand
+
+                                                        Tests for Normality
+ 
+                                     Test                  --Statistic---    -----p Value------
+
+                                     Cramer-von Mises      W-Sq   0.79949    Pr > W-Sq  <0.0050
+                                     Anderson-Darling      A-Sq  4.720941    Pr > A-Sq  <0.0050
+
+
+                                                      Quantiles (Definition 5)
+ 
+                                                       Level         Quantile
+
+                                                       100% Max       4.82840
+                                                       99%            4.50425
+                                                       95%            3.50758
+                                                       90%            3.14088
+                                                       75% Q3         2.61308
+                                                       50% Median     2.25778
+                                                       25% Q1         2.02653
+                                                       10%            1.86798
+                                                       5%             1.73567
+                                                       1%             1.63855
+                                                       0% Min         1.54872
+
+
+                                                        Extreme Observations
+ 
+                                             ------Lowest-----        -----Highest-----
+ 
+                                                Value      Obs           Value      Obs
+
+                                              1.54872      244         3.89503      416
+                                              1.63855      170         4.06297        2
+                                              1.64818       78         4.29035        7
+                                              1.65807      433         4.50425      145
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low NV Sensitivity 94
+
+                                                      The UNIVARIATE Procedure
+                                Variable:  TIMEF  (Readministration Section F Timings (in Minutes))
+                                                       Duration_Group = Stand
+
+                                                        Extreme Observations
+ 
+                                             ------Lowest-----        -----Highest-----
+ 
+                                                Value      Obs           Value      Obs
+
+                                              1.67682      204         4.82840      282
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+    Analysis #6: Mean Duration in Seconds of Re-administration Section by Nonverbal Sensitivity Group and Interviewing Technique  95
+
+                                                        The MEANS Procedure
+
+                             Analysis Variable : TIMEF Readministration Section F Timings (in Minutes)
+ 
+  Interviewer Audio
+  PONS Group
+  Crossed with
+  Re-administration
+  Interviewing
+  Technique:
+  'Stand', 'Hi -         N                              Lower 95%       Upper 95%
+  CI', 'Lo - CI'       Obs      N            Mean     CL for Mean     CL for Mean       Std Error         Minimum         Maximum
+  -------------------------------------------------------------------------------------------------------------------------------
+  High - CI             81     81            2.99            2.82            3.16            0.08            1.65            5.47
+
+  Lo - CI               97     97            3.49            3.26            3.72            0.11            1.89            8.22
+
+  Stand                163    163            2.40            2.32            2.49            0.04            1.55            4.83
+  -------------------------------------------------------------------------------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+  Statistical Test of Mean Duration in Seconds of Re-administration Section - Conv-High NV Sensitivity vs Conv-Low NR Sensitivity 96
+    Wilcoxson Mann-Whitney Test nonparametric test because gropus do not have equal variances nor are they normally distributed
+
+                                                       The NPAR1WAY Procedure
+
+                                          Wilcoxon Scores (Rank Sums) for Variable TIMEF
+                                               Classified by Variable Duration_Group
+ 
+                             Duration_                Sum of      Expected       Std Dev          Mean
+                             Group           N        Scores      Under H0      Under H0         Score
+
+                             Lo - CI        97        9695.0       8681.50    342.345221     99.948454
+                             High - CI      81        6236.0       7249.50    342.345221     76.987654
+
+
+                                                      Wilcoxon Two-Sample Test
+ 
+                                                                                  t Approximation
+                                  Statistic           Z    Pr < Z    Pr > |Z|    Pr < Z  Pr > |Z|
+
+                                   6236.000     -2.9590    0.0015      0.0031    0.0018    0.0035
+
+                                             Z includes a continuity correction of 0.5.
+
+
+                                                         Kruskal-Wallis Test
+ 
+                                                 Chi-Square        DF    Pr > ChiSq
+
+                                                     8.7643         1        0.0031
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Footnote 20 Analysis: Statistical Test of Mean Duration in Seconds of Re-administration Section - Standaridized vs Conv-Low NR Se 97
+                     Wilcoxson Mann-Whitney Test nonparametric test because gropus do not have equal variances
+
+                                                       The NPAR1WAY Procedure
+
+                                          Wilcoxon Scores (Rank Sums) for Variable TIMEF
+                                               Classified by Variable Duration_Group
+ 
+                             Duration_                Sum of      Expected       Std Dev          Mean
+                             Group           N        Scores      Under H0      Under H0         Score
+
+                             Lo - CI        97       17847.0      12658.50    586.420611    183.989691
+                             Stand         163       16083.0      21271.50    586.420611     98.668712
+
+                                                Average scores were used for ties.
+
+
+                                                      Wilcoxon Two-Sample Test
+ 
+                                                                                  t Approximation
+                                  Statistic           Z    Pr > Z    Pr > |Z|    Pr > Z  Pr > |Z|
+
+                                   17847.00      8.8469    <.0001      <.0001    <.0001    <.0001
+
+                                             Z includes a continuity correction of 0.5.
+
+
+                                                         Kruskal-Wallis Test
+ 
+                                                 Chi-Square        DF    Pr > ChiSq
+
+                                                    78.2826         1        <.0001
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard
+ 
+____________________________________________________________________________________________________________________________________
+ 
+Footnote 20 Analysis: Statistical Test of Mean Duration in Seconds of Re-administration Section - Standaridized vs Conv-High NR S 98
+                     Wilcoxson Mann-Whitney Test nonparametric test because gropus do not have equal variances
+
+                                                       The NPAR1WAY Procedure
+
+                                          Wilcoxon Scores (Rank Sums) for Variable TIMEF
+                                               Classified by Variable Duration_Group
+ 
+                             Duration_                Sum of      Expected       Std Dev          Mean
+                             Group           N        Scores      Under H0      Under H0         Score
+
+                             Stand         163      16535.50      19967.50    519.192669    101.444785
+                             High - CI      81      13354.50       9922.50    519.192669    164.870370
+
+                                                Average scores were used for ties.
+
+
+                                                      Wilcoxon Two-Sample Test
+ 
+                                                                                  t Approximation
+                                  Statistic           Z    Pr > Z    Pr > |Z|    Pr > Z  Pr > |Z|
+
+                                   13354.50      6.6093    <.0001      <.0001    <.0001    <.0001
+
+                                             Z includes a continuity correction of 0.5.
+
+
+                                                         Kruskal-Wallis Test
+ 
+                                                 Chi-Square        DF    Pr > ChiSq
+
+                                                    43.6956         1        <.0001
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                        Program:	Final_Analyses.sas			Created by: F.Hubbard

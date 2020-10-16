@@ -1,0 +1,396 @@
+1                                           The SAS System            15:30 Thursday, October 15, 2020
+
+WARNING: Entry VT_PRINTLIST.SLIST was restored. The entry's data may be truncated.
+NOTE: The catalog repair process is complete for SASUSER.PROFILE.CATALOG.
+NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M6) 
+      Licensed to WESTAT INC, Site 70006348.
+NOTE: This session is executing on the W32_10PRO  platform.
+
+
+
+NOTE: Analytical products:
+      
+      SAS/STAT 15.1
+
+NOTE: Additional host information:
+
+ W32_10PRO WIN 10.0.17134  Workstation
+
+NOTE: SAS initialization used:
+      real time           2.33 seconds
+      cpu time            0.37 seconds
+      
+
+NOTE: AUTOEXEC processing beginning; file is \\Westat.com\dfs\SAS\SASMISC\autoexec_9432.sas.
+
+
+NOTE: AUTOEXEC processing completed.
+
+1          /***************************************************************************************
+2          FILEPATH:	K:\DVSTAT\Individual
+2        ! Directories\Hubbard\09_Publications\PONS\03_Code\Models_Addressing_Reviewers_Concers.sas
+3          
+4          AUTHOR:  	F.HUBBARD FrostHubbard@Westat.com
+5          
+6          PURPOSE:	To generate models addressing the Survey Research Methods reviwers concerns for a
+6        ! 11/30/18 meeting with F. Conrad
+7          
+8          INPUT:		K:\DVSTAT\Individual
+8        ! Directories\Hubbard\09_Publications\PONS\02_Data\conv.analysis_dataset_20121114.sas7bdat
+9          
+10         OUTPUT:		K:\DVSTAT\Individual
+10       ! Directories\Hubbard\09_Publications\PONS\03_Code\Models_Addressing_Reviewers_Concerns_&SYSD
+10       ! ATE..pdf
+11         
+12         NOTES:		4/2/2020 - Revised program to use updated filepaths
+13         ***************************************************************************************/
+14         
+15         options nodate FORMDLIM='_';
+16         libname conv "\\westat.com\DFS\DVSTAT\Individual
+16       ! Directories\Hubbard\02_Journals\Manuscripts\PONS\02_Data";
+NOTE: Libref CONV was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: \\westat.com\DFS\DVSTAT\Individual 
+      Directories\Hubbard\02_Journals\Manuscripts\PONS\02_Data
+17         footnote "Program: Models_Addressing_Reviewers_Concerns.sas			Created by: F.Hubbard
+2                                           The SAS System
+
+17       ! &SYSDATE";
+18         
+19         /*STEP 1: Create question level dataset.  v1800 = Driven Car in Last 30 days*/
+20         data subset_all;
+21         	set conv.analysis_dataset_20121114 (keep =  um_id sampid iw_tech aud audio_tot v1800
+21       ! pons_group1 gd_bd_ch bet_wor_ch fav_unfav_ch edu_ch phcell_ch
+22         												phline_ch lg_dis_ch morn_ch accid_ch dd_risk_ch Good_Bad_Def bett_worse_def
+22       ! hear_fav_unfav_def
+23         												Yrs_Educ_Def nm_cells_def nm_LL_def DD_Long_Dist_def DD_Morning_def
+23       ! DD_Accid_def DD_How_Risky_def
+24         												Good_Bad_qxq bett_worse_qxq hear_fav_unfav_qxq
+25         												Yrs_Educ_qxq nm_cells_qxq nm_LL_qxq DD_Long_Dist_qxq DD_Morning_qxq
+25       ! DD_Accid_qxq DD_How_Risky_qxq
+26         												Good_Bad_prestr bett_worse_prestr hear_fav_unfav_prestr
+27         												Yrs_Educ_prestr nm_cells_prestr nm_LL_prestr DD_Long_Dist_prestr
+27       ! DD_Morning_prestr DD_Accid_prestr DD_How_Risky_prestr
+28         												race educ sex marry v1628 ics metstat homeown qincsum numadt numkid age);
+29         	if sampid not in (20220,30279,30771,30146);
+30         	
+31         	if race = 1 then Race_R = 'White';
+32         	else if race = 2 then race_r = 'Black';
+33         	else if race >=3 then race_r = 'Other';
+34         
+35         	if educ in (1,2,3) then educ_r = 'HS or Less';
+36         	else if educ in (4,9) then educ_r = 'Some Coll';
+37         	else if educ = 5 then educ_r = 'Coll Deg';
+38         	else if educ = 6 then educ_r = 'Coll Plus';
+39         
+40         	if educ in (1,2,3,4,9) then Educ_2cat = 'Some Coll or Less';
+41         	else if educ in (5,6) then educ_2cat = 'Coll or More';
+42         
+43         	if sex = 1 then Sex_R = 'Male  ';
+44         	else sex_r = 'Female';
+45         
+46         	if marry in (1,6) then marry_r = 'Married ';
+47         	else if marry in (2,3) then marry_r = 'Div/Sep';
+48         	else if marry = 4 then marry_r = 'Widow';
+49         	else if marry = 5 then marry_r = 'Nev Marr';
+50         
+51         	if v1628 = 1 then understandiw_r = 'Excellent';
+52         	else if v1628 = 2 then understandiw_r = 'Good';
+53         	else if v1628 in (3,4) then understandiw_r = 'Fair/Poor';
+54         
+55         	if ics < 45 then ics_r = '2 to 31   ';
+56         	else if 45 < ics < 75 then ics_r = '46 to 61';
+57         	else if 75 < ics < 105 then ics_r = '76 to 91';
+58         	else if 105 < ics then ics_r = '106 to 150';
+59         
+60         	if metstat = 1 then metstat_r = 'Center City MSA';
+61         	else if metstat = 2 then metstat_r = 'Urban Cty MSA';
+62         	else if metstat in (3,4) then metstat_r = 'Suburb Cty MSA';
+63         	else if metstat = 5 then metstat_r = 'Non MSA';
+64         
+65         	if homeown = 1 then homeown_r = '    Owner';
+3                                           The SAS System
+
+66         	else homeown_r = 'Not Owner';
+67         
+68         	if qincsum <=5 or qincsum = 23 then inc_r = '< $30K';
+69         	else if 6 <= qincsum <=10 then inc_r = '$30-59K';
+70         	else if qincsum in (11,12,24) then inc_r = '$60-99K';
+71         	else if 13 <= qincsum <= 22 then inc_r = '>= $100K';
+72         	else if qincsum = 99 then inc_r = 'Miss';
+73         
+74         	if 17 < age <= 59 then Age_2cat = '18-59';
+75         	else if age >= 60 then age_2cat = '60+';
+76         
+77         	if 17 < age < 45 then Age_4cat = '18-44';
+78         	else if 44 < age < 60 then age_4cat = '45-59';
+79         	else if 59 < age < 70 then age_4cat = '60-69';
+80         	else if 69 < age  then age_4cat = '70+';
+81         	/*then iw_tech = 'Conv';*/
+82         run;
+
+NOTE: There were 494 observations read from the data set CONV.ANALYSIS_DATASET_20121114.
+NOTE: The data set WORK.SUBSET_ALL has 490 observations and 71 variables.
+NOTE: Compressing data set WORK.SUBSET_ALL decreased size by 57.14 percent. 
+      Compressed is 3 pages; un-compressed would require 7 pages.
+NOTE: DATA statement used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.04 seconds
+      
+
+83         
+84         /*Transpose the dataset*/
+85         Data question_level (drop = gd_bd_ch bet_wor_ch fav_unfav_ch edu_ch phcell_ch phline_ch
+85       ! lg_dis_ch morn_ch accid_ch dd_risk_ch i
+86         					    Good_Bad_Def bett_worse_def hear_fav_unfav_def Yrs_Educ_Def nm_cells_def nm_LL_def
+86       !  DD_Long_Dist_def DD_Morning_def DD_Accid_def DD_How_Risky_def
+87         						Good_Bad_qxq bett_worse_qxq hear_fav_unfav_qxq Yrs_Educ_qxq nm_cells_qxq nm_LL_qxq
+87       ! DD_Long_Dist_qxq DD_Morning_qxq DD_Accid_qxq DD_How_Risky_qxq
+88         						Good_Bad_prestr bett_worse_prestr hear_fav_unfav_prestr Yrs_Educ_prestr
+88       ! nm_cells_prestr nm_LL_prestr DD_Long_Dist_prestr DD_Morning_prestr DD_Accid_prestr
+88       ! DD_How_Risky_prestr
+89         						race educ sex marry v1628 ics metstat homeown qincsum);
+90         	set subset_all;	
+91         	array change_var[*] gd_bd_ch bet_wor_ch fav_unfav_ch edu_ch phcell_ch phline_ch lg_dis_ch
+91       ! morn_ch accid_ch dd_risk_ch;	/*These are the currently existing vars you want to*/
+92         	array give_def[*] Good_Bad_Def bett_worse_def hear_fav_unfav_def Yrs_Educ_Def nm_cells_def
+92       !  nm_LL_def DD_Long_Dist_def DD_Morning_def DD_Accid_def DD_How_Risky_def;
+93         	array give_qxq[*] Good_Bad_qxq bett_worse_qxq hear_fav_unfav_qxq Yrs_Educ_qxq nm_cells_qxq
+93       !  nm_LL_qxq DD_Long_Dist_qxq DD_Morning_qxq DD_Accid_qxq DD_How_Risky_qxq;
+94         	array give_preemp[*] Good_Bad_prestr bett_worse_prestr hear_fav_unfav_prestr
+94       ! Yrs_Educ_prestr nm_cells_prestr nm_LL_prestr DD_Long_Dist_prestr DD_Morning_prestr
+94       ! DD_Accid_prestr DD_How_Risky_prestr;
+95         												
+96         	do i=1 to dim(change_var);
+97         		Resp_Change=change_var[i]; /*Assign the original values to the newly created variable.*/
+98         		Def_Given = give_def[i];
+99         		Qxq_Given = give_qxq[i];
+4                                           The SAS System
+
+100        		Preemp_Given = give_preemp[i];
+101        
+102        		if i=3 then Question = 'Heard Fav Unfav in Biz Cond Last Few Mo?';
+103        		if i=1 then Question = 'U.S. Good or Bad $ Times Next Yr?';
+104        		if i=2 then Question = 'Family Better or Worse $ Over 1 Yr?';
+105        		if i=4 then Question = 'Highest Year School?';
+106        		if i=5 then Question = '# Cell Ph in HH?';
+107        		if i=6 then Question = '# LL in HH?';
+108        		if i=7 then Question = 'Long Dist Incr Your DD?';
+109        		if i=8 then Question = 'AM Drive Incr Your DD?';
+110        		if i=9 then Question = 'Ever Accident From DD?';
+111        		if i=10 then Question = 'How Risky is DD?';
+112        
+113        		if i in (1,2,7,8,10) then Question_Type = 'Opinion';
+114        		else Question_Type = 'Factual';
+115        
+116        		if def_given = 9 then def_given = .;
+117        		if def_given = 1 then definition_given = 'Yes';
+118        		else if def_given = 0 then definition_given = 'No';
+119        		else definition_given = '';
+120        
+121        		if qxq_given = 9 then qxq_given = .;
+122        		if qxq_given = 1 then Q_by_Q_given = 'Yes';
+123        		else if qxq_given = 0 then Q_by_Q_given = 'No';
+124        		else Q_by_Q_given = '';
+125        
+126        		if preemp_given = 9 then preemp_given = .;
+127        		if preemp_given = 1 then Preemptive_given = 'Yes';
+128        		else if preemp_given = 0 then Preemptive_given = 'No';
+129        		else Preemptive_given = '';
+130        
+131        		Respdef_Given=.;
+132        		Def_Type = '               ';
+133        
+134        		if def_given = 1 and preemp_given = 0 then do;
+135        			respdef_given = 1;
+136        			def_type = 'Responsive Def';
+137        		end;
+138        
+139        		if def_given = 1 and preemp_given = 1 then do;
+140        			respdef_given=0;
+141        			def_type = 'Preemptive Str';
+142        		end;
+143        
+144        		if def_given = 0 then do;
+145        			respdef_given=0;
+146        			def_type = 'No Def Given';
+147        		end;
+148        
+149        		if aud = "High" and iw_tech = 'Conv' then Group = "High - CI";
+150        		else if aud = "Low" and iw_tech = "Conv" then group = "Lo - CI";
+151        		else if aud ne " " and iw_tech = "Stand" then group = "Stand";
+152        		else group = '';
+153        
+5                                           The SAS System
+
+154        		output question_level;
+155        	end;
+156        run;
+
+NOTE: There were 490 observations read from the data set WORK.SUBSET_ALL.
+NOTE: The data set WORK.QUESTION_LEVEL has 4900 observations and 34 variables.
+NOTE: Compressing data set WORK.QUESTION_LEVEL decreased size by 54.76 percent. 
+      Compressed is 19 pages; un-compressed would require 42 pages.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+157        
+158        data conv.PUF_question_level;
+159        	set question_level (drop = UM_ID audio_tot v1800 numkid numadt age educ_r marry_r
+159      ! understandiw_r ics_r
+160        							   metstat_r homeown_r inc_r qxq_given q_by_q_given definition_given pons_group1
+160      ! PREEMPTIVE_GIVEN);
+161        	if aud = "High" and iw_tech = 'Conv' then group = "High - CI";
+162        	else if aud = "Low" and iw_tech = "Conv" then group = "Lo - CI";
+163        	else if aud ne " " and iw_tech = "Stand" then group = "Stand";
+164        	else group = '';
+165        
+166        	label 	AUD = 'Interviewer Audio PONS Group'
+167        		  	Age_2cat = "Respondent Age - Two Categories: '18-59' and '60+'"
+168        		  	Age_4cat = "Respondent Age - Four Categories: '18-44', '45-59', '60-69', and '70+'"
+169        		  	Def_Given = "Interviewer Provided Definition: 1=Yes, 0 = No, .= Question not asked"
+170        		  	Def_Type = "Type of Definition Given by Interview: 'No Def Given', 'Preemptive Str',
+170      ! 'Responsive Def'"
+171        			Educ_2cat = "Respondent Education Level - Two Categories: 'Coll or More', 'Some Coll or
+171      ! Less'"
+172        			Group = "Interviewer Audio PONS Group Crossed with Re-administration Interviewing
+172      ! Technique: 'Stand', 'Hi - CI', 'Lo - CI'"
+173        			IW_Tech = "Assigned Re-administration Interviewing Technique: 'Conv' and 'Stand'"
+174        			Preemp_Given = "Interviewer Provided Pre-emptive Strike Definition: 1=Yes, 0 = No, .=
+174      ! Question not asked"
+175        			Question = "Shortened Summary of Question Wording"
+176        			Question_Type = "Type of Question Asked: 'Factual', 'Opinion'"
+177        			Race_R = "Race of Respondent: 'Black', 'White', 'Other'"
+178        			Resp_Change = "Indicator of Response Change between Response Provided in Initial
+178      ! Administration and Response Provided in Re-administration: 1=Yes, 0=No"
+179        			Respdef_Given = "Interviewer Provided Responsive Definition: 1=Yes, 0 = No, .= Question
+179      ! not asked"
+180        			SAMPID = "Sample ID"
+181        			Sex_R = "Sex of Respondent: 'Male' or 'Female'";
+182        run;
+
+NOTE: There were 4900 observations read from the data set WORK.QUESTION_LEVEL.
+NOTE: The data set CONV.PUF_QUESTION_LEVEL has 4900 observations and 16 variables.
+NOTE: Compressing data set CONV.PUF_QUESTION_LEVEL decreased size by 15.38 percent. 
+      Compressed is 11 pages; un-compressed would require 13 pages.
+NOTE: DATA statement used (Total process time):
+      real time           0.16 seconds
+6                                           The SAS System
+
+      cpu time            0.03 seconds
+      
+
+183        
+184        
+185        proc contents data=conv.PUF_question_level;
+186        run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.13 seconds
+      cpu time            0.09 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed pages 1-2.
+
+187        
+188        /*TIMINGS DATASET 	
+189        	1. Drop all cases where person said they don't drive (v1800)
+190        	2. Drop 4 cases that completed iw as Conversational although assigned as standardized
+191        	3. Drop 2 cases (20172,30577) where R's did not answer more than 2 Sect F questions
+192        	4. Dropped cases that are above 95% in each group and one case that has SecF timing of
+192      ! ~0.4
+193        */
+194        
+195        data conv.readmin_sect_timings (keep = sampid timef duration_group iw_tech);
+196        	set conv.analysis_dataset_20121114 (where = (v1800 = 1 and sampid not in
+196      ! (20220,30279,30771,30146,20172,30577)
+197        												 and timef >=1)
+198        										keep = sampid pons_group1 timef v1800 iw_tech aud);
+199        	
+200        	/*Collapsing the two Standardized PONS groups into one group and redoing the duration
+200      ! variable*/
+201        
+202        	if aud = "High" and iw_tech = 'Conv' then Duration_Group = "High - CI";
+203        		else if aud = "Low" and iw_tech = "Conv" then Duration_Group = "Lo - CI";
+204        		else if aud ne " " and iw_tech = "Stand" then Duration_Group = "Stand";
+205        		else Duration_Group = '';
+206        	
+207        	label 	Duration_Group = "Interviewer Audio PONS Group Crossed with Re-administration
+207      ! Interviewing Technique: 'Stand', 'Hi - CI', 'Lo - CI'"
+208        			SampID = "Sample ID"
+209        			TIMEF = "Readministration Section F Timings (in Minutes)";
+210        run;
+
+NOTE: There were 449 observations read from the data set CONV.ANALYSIS_DATASET_20121114.
+      WHERE (v1800=1) and sampid not in (20172, 20220, 30146, 30279, 30577, 30771) and (timef>=1);
+NOTE: The data set CONV.READMIN_SECT_TIMINGS has 449 observations and 4 variables.
+NOTE: Compressing data set CONV.READMIN_SECT_TIMINGS increased size by 100.00 percent. 
+      Compressed is 2 pages; un-compressed would require 1 pages.
+NOTE: DATA statement used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.03 seconds
+      
+
+211        
+7                                           The SAS System
+
+212        proc contents data=conv.readmin_sect_timings;
+213        run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 3.
+
+214        
+215        title "Footnote 8 Analysis: Median Duration of Initial Interview";
+216        proc univariate data=conv.analysis_dataset_20121114 ;
+217        	where sampid not in (20220,30279,30771,30146);
+218        	var v12;
+219        run;
+
+NOTE: The PROCEDURE UNIVARIATE printed pages 4-5.
+NOTE: PROCEDURE UNIVARIATE used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+220        title;
+221        
+222        proc freq data=conv.analysis_dataset_20121114;
+223        	where sampid not in (20220,30279,30771,30146);
+224        	table v1800;
+225        run;
+
+NOTE: There were 490 observations read from the data set CONV.ANALYSIS_DATASET_20121114.
+      WHERE sampid not in (20220, 30146, 30279, 30771);
+NOTE: The PROCEDURE FREQ printed page 6.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+226        
+227        proc print data= conv.analysis_dataset_20121114;
+228        	where v1800 = 1 and (timef < 1 or sampid in (20172,30577));
+229        	var v1800 sampid timef;
+230        run;
+
+NOTE: There were 2 observations read from the data set CONV.ANALYSIS_DATASET_20121114.
+      WHERE (v1800=1) and ((timef<1) or sampid in (20172, 30577));
+NOTE: The PROCEDURE PRINT printed page 7.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           3.22 seconds
+8                                           The SAS System
+
+      cpu time            0.73 seconds
+      
