@@ -1,0 +1,761 @@
+1                                           The SAS System            20:56 Thursday, October 15, 2020
+
+NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M6) 
+      Licensed to WESTAT INC, Site 70006348.
+NOTE: This session is executing on the W32_10PRO  platform.
+
+
+
+NOTE: Analytical products:
+      
+      SAS/STAT 15.1
+
+NOTE: Additional host information:
+
+ W32_10PRO WIN 10.0.17134  Workstation
+
+NOTE: SAS initialization used:
+      real time           1.67 seconds
+      cpu time            0.29 seconds
+      
+
+NOTE: AUTOEXEC processing beginning; file is \\Westat.com\dfs\SAS\SASMISC\autoexec_9432.sas.
+
+
+NOTE: AUTOEXEC processing completed.
+
+1          /***************************************************************************************
+2          PROGRAM:	Final_Analyses.sas
+3          			
+4          AUTHOR:  	Frost Hubbard	frosthubbard@westat.com
+5          
+6          PURPOSE:	To analyze the data at the question level and the case level. The case level
+7          			analyses will be for the re-administration section timings. All other analyses
+8          			are at the case level. None of the analyses regarding interviewer demographics
+9          			are provided here. If you are interested in these analyses, please email
+10         			frosthubbard@westat.com
+11         
+12         INPUT:		PUF_question_level.sas7bdat and readmin_sect_timings.sas7bdat (a case-level file)
+13         
+14         OUTPUT:		
+15         
+16         NOTES:		10/15/2020 - Delivered to SRM Editors
+17         ***************************************************************************************/
+18         
+19         options nodate FORMDLIM='_';
+20         ods graphics on /reset=all;
+21         goptions reset=all fontres=presentation ftext=swissb htext=1.5;
+NOTE: No units specified for the HTEXT option. The current units associated with GUNIT will be used.
+22         
+23         /* To produce an rtf file of the output, if so desired:*/
+24         ods rtf startpage=never style=journal file = "\\westat.com\DFS\DVSTAT\Individual
+24       ! Directories\Hubbard\02_Journals\Manuscripts\PONS\04_Reports\Final_Analyses_Output_&SYSDATE.
+24       ! .rtf";
+NOTE: Writing RTF Body file: \\westat.com\DFS\DVSTAT\Individual 
+      Directories\Hubbard\02_Journals\Manuscripts\PONS\04_Reports\Final_Analyses_Output_15OCT20.rtf
+2                                           The SAS System
+
+25         
+26         libname conv "\\westat.com\DFS\DVSTAT\Individual
+26       ! Directories\Hubbard\02_Journals\Manuscripts\PONS\02_Data";
+NOTE: Libref CONV was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: \\westat.com\DFS\DVSTAT\Individual 
+      Directories\Hubbard\02_Journals\Manuscripts\PONS\02_Data
+27         footnote "Program:	Final_Analyses.sas			Created by: F.Hubbard";
+28         
+29         /******************************************************************************************
+29       ! ********************************
+30         Question Level Analyses using PUF_question_level.sas7bdat
+31         *******************************************************************************************
+31       ! *********************************/
+32         
+33         title "Analysis #1: Mean % Response Change by Interviewing Technique";
+34         proc means data=conv.PUF_question_level n mean stderr lclm uclm;
+35         	class iw_tech /*question_type*/;
+36         	var resp_change;
+37         	output out=mod1_means mean= n=count;
+38         run;
+
+NOTE: Multiple concurrent threads will be used to summarize data.
+NOTE: There were 4900 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+NOTE: The data set WORK.MOD1_MEANS has 3 observations and 5 variables.
+NOTE: Compressing data set WORK.MOD1_MEANS increased size by 100.00 percent. 
+      Compressed is 2 pages; un-compressed would require 1 pages.
+NOTE: The PROCEDURE MEANS printed page 1.
+NOTE: PROCEDURE MEANS used (Total process time):
+      real time           0.14 seconds
+      cpu time            0.09 seconds
+      
+
+39         title;
+40         
+41         /*Running models with rand eff of respondent*/
+42         proc sort data=conv.PUF_question_level;
+43         	by resp_change descending question_type iw_tech;
+44         run;
+
+NOTE: Input data set is already sorted, no sorting done.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+45         
+46         title "Analysis #2a: Logistic Regression with interaction: DV - Resp_Change (dichotomous);
+46       ! IV: Iw_Tech, Question_Type, and Iw_Tech*Question_Type";
+47         proc logistic data=conv.PUF_question_level descending;
+48         	class question_type (ref='Factual') iw_tech (ref = 'Stand')/param=glm;
+49         	model resp_change = iw_tech question_type iw_tech*question_type;
+50         	oddsratio question_type / at(iw_tech='Conv');
+51         	slice iw_tech*question_type / sliceby(iw_tech='Conv') diff oddsratio;
+3                                           The SAS System
+
+52         
+53         	oddsratio question_type / at(iw_tech='Stand');
+54         	slice iw_tech*question_type / sliceby(iw_tech='Stand') diff oddsratio;
+55         
+56         	oddsratio iw_tech / at(question_type='Factual');
+57         	slice iw_tech*question_type / sliceby(question_type='Factual') diff oddsratio;
+58         
+59         	oddsratio iw_tech / at(iw_tech='Opinion');
+60         	slice iw_tech*question_type / sliceby(question_type='Opinion') diff oddsratio;
+61         run;
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 4900 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+NOTE: The PROCEDURE LOGISTIC printed pages 2-6.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           7.87 seconds
+      cpu time            1.03 seconds
+      
+
+62         quit;
+63         
+64         title "Analysis #2b (Table 1): Logistic Regression w/o interaction: DV - Resp Change
+64       ! (dichotomous); IV: Iw Tech and Question Type";
+65         proc logistic data=conv.PUF_question_level descending;
+66         	class question_type (ref='Factual') iw_tech (ref = 'Stand');
+67         	model resp_change = iw_tech question_type;
+68         run;
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 4900 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+NOTE: The PROCEDURE LOGISTIC printed pages 7-9.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.07 seconds
+      
+
+69         quit;
+70         title;
+71         
+72         title "Analysis #2c: Logistic Regression w/ interaction, excluding the How Risky is Drowsy
+72       ! Driving Question";
+73         title2 "DV - Resp Change (dichotomous); IV: Iw Tech and Question Type";
+74         proc logistic data=conv.PUF_question_level descending;
+75         	where question ne 'How Risky is DD?';
+76         	class question_type (ref='Factual') iw_tech (ref = 'Stand');
+77         	model resp_change = iw_tech question_type iw_tech*question_type;
+78         run;
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+4                                           The SAS System
+
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+NOTE: There were 4410 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE question not = 'How Risky is DD?';
+NOTE: The PROCEDURE LOGISTIC printed pages 10-12.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.07 seconds
+      
+
+79         quit;
+80         title;
+81         
+82         title "Analysis #2d: Logistic Regression w/o interaction, excluding the How Risky is Drowsy
+82       !  Driving Question";
+83         title2 "DV - Resp Change (dichotomous); IV: Iw Tech and Question Type";
+84         proc logistic data=conv.PUF_question_level descending;
+85         	where question ne 'How Risky is DD?';
+86         	class question_type (ref='Factual') iw_tech (ref = 'Stand');
+87         	model resp_change = iw_tech question_type;
+88         run;
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 4410 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE question not = 'How Risky is DD?';
+NOTE: The PROCEDURE LOGISTIC printed pages 13-15.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+      
+
+89         quit;
+90         title;
+91         
+92         title "Analysis #2e: Logistic Regression w/o interaction: DV - Resp Change (dichotomous);
+92       ! IV: Iw Tech, Question Type, Education Level, Age, Gender";
+93         proc logistic data=conv.PUF_question_level descending;
+94         	class 	question_type (ref='Factual') iw_tech (ref = 'Stand') educ_2cat (ref = 'Coll or
+94       ! More')
+95         			age_4cat (ref = '18-44') sex_r (ref = 'Female');
+96         	model resp_change = iw_tech question_type educ_2cat age_4cat sex_r;
+97         run;
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 4900 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+NOTE: The PROCEDURE LOGISTIC printed pages 16-18.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.07 seconds
+      
+
+98         quit;
+99         title;
+5                                           The SAS System
+
+100        
+101        /*Appendix B Analyses*/
+102        %macro log_split (var=, val=);
+103        title "Appendix B: Logistic Regression w/ interaction: Only &val cases";
+104        proc logistic data=conv.PUF_question_level descending;
+105        	where &var = "&val";
+106        	class question_type (ref='Factual') iw_tech (ref = 'Stand');
+107        	model resp_change = iw_tech question_type iw_tech*question_type;
+108        run;
+109        quit;
+110        title;
+111        %mend;
+112        
+113        %log_split (var=educ_2cat, val = Coll or More);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+NOTE: There were 2150 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE educ_2cat='Coll or More';
+NOTE: The PROCEDURE LOGISTIC printed pages 19-21.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+114        %log_split (var=educ_2cat, val = Some Coll or Less);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+NOTE: There were 2750 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE educ_2cat='Some Coll or Less';
+NOTE: The PROCEDURE LOGISTIC printed pages 22-24.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+      
+
+115        
+116        %log_split (var=age_2cat, val = 18-59);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+NOTE: There were 2720 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE age_2cat='18-59';
+NOTE: The PROCEDURE LOGISTIC printed pages 25-27.
+6                                           The SAS System
+
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.06 seconds
+      
+
+117        %log_split (var=age_2cat, val = 60+);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+NOTE: There were 2180 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE age_2cat='60+';
+NOTE: The PROCEDURE LOGISTIC printed pages 28-30.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.07 seconds
+      
+
+118        
+119        %log_split (var=sex_r, val = Female);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+NOTE: There were 2710 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE sex_r='Female';
+NOTE: The PROCEDURE LOGISTIC printed pages 31-33.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.07 seconds
+      
+
+120        %log_split (var=sex_r, val = Male);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: Under full-rank parameterizations, Type 3 effect tests are replaced by joint tests. The joint 
+      test for an effect is a test that all the parameters associated with that effect are zero. Such 
+      joint tests might not be equivalent to Type 3 effect tests under GLM parameterization.
+NOTE: There were 2190 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE sex_r='Male';
+NOTE: The PROCEDURE LOGISTIC printed pages 34-36.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+121        
+122        %macro logist_main_effects_only (var=, val=);
+123        title "Appendix B: Logistic Regression w/o interaction: Only &val cases";
+7                                           The SAS System
+
+124        proc logistic data=conv.PUF_question_level descending;
+125        	where &var = "&val";
+126        	class question_type (ref='Factual') iw_tech (ref = 'Stand');
+127        	model resp_change = iw_tech question_type/;
+128        run;
+129        quit;
+130        title;
+131        %mend;
+132        
+133        %logist_main_effects_only (var=educ_2cat, val = Coll or More);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 2150 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE educ_2cat='Coll or More';
+NOTE: The PROCEDURE LOGISTIC printed pages 37-39.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+      
+
+134        %logist_main_effects_only (var=educ_2cat, val = Some Coll or Less);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 2750 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE educ_2cat='Some Coll or Less';
+NOTE: The PROCEDURE LOGISTIC printed pages 40-42.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+135        
+136        %logist_main_effects_only (var=age_2cat, val = 18-59);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 2720 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE age_2cat='18-59';
+NOTE: The PROCEDURE LOGISTIC printed pages 43-45.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.06 seconds
+      
+
+137        %logist_main_effects_only (var=age_2cat, val = 60+);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 2180 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE age_2cat='60+';
+NOTE: The PROCEDURE LOGISTIC printed pages 46-48.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+8                                           The SAS System
+
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+      
+
+138        
+139        %logist_main_effects_only (var=sex_r, val = Female);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 2710 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE sex_r='Female';
+NOTE: The PROCEDURE LOGISTIC printed pages 49-51.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.06 seconds
+      
+
+140        %logist_main_effects_only (var=sex_r, val = Male);
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 2190 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE sex_r='Male';
+NOTE: The PROCEDURE LOGISTIC printed pages 52-54.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+141        
+142        
+143        title "Analysis #4: % Response Change by Interviewing Technique for Factual Questions";
+144        proc freq data=conv.PUF_question_level;
+145        	where question_type = 'Factual';
+146        	table resp_change*iw_tech/chisq;
+147        run;
+
+NOTE: There were 2450 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE question_type='Factual';
+NOTE: The PROCEDURE FREQ printed pages 55-56.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+148        title;
+149        
+150        title "Analysis #5: % Response Change by Interviewing Technique for Opinion Questions";
+151        proc freq data=conv.PUF_question_level;
+152        	where question_type = 'Opinion';
+153        	table resp_change*iw_tech/chisq;
+154        run;
+
+NOTE: There were 2450 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+9                                           The SAS System
+
+      WHERE question_type='Opinion';
+NOTE: The PROCEDURE FREQ printed pages 57-58.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+155        title;
+156        
+157        title "Analysis #6a: Mean % Response Change by Iw Tech and NV Sensitivity Group";
+158        proc means data=conv.PUF_question_level mean stderr lclm uclm maxdec=3;
+159        	where group ne '';
+160        	class group;
+161        	var resp_change;
+162        run;
+
+NOTE: Multiple concurrent threads will be used to summarize data.
+NOTE: There were 3720 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE group not = ' ';
+NOTE: The PROCEDURE MEANS printed page 59.
+NOTE: PROCEDURE MEANS used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+163        title;
+164        
+165        title "Analysis #6b: Logistic Regression: DV - Response Change; IV - Iw Tech and NV
+165      ! Sensistivity Group (Low NV Sensitivity - Conv Iw, High NV Sensitivity - Conv Iw; Stand Iw)"
+165      ! ;
+166        title "Reference group: Low NV Sensitivity - Conv Iw";
+167        proc logistic data=conv.PUF_question_level descending;
+168        	class group (ref = "Lo - CI" param=ref);
+169        	model resp_change = group;
+170        run;
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 4900 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+NOTE: The PROCEDURE LOGISTIC printed pages 60-62.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+      
+
+171        title;
+172        
+173        title "Analysis #6c: Logistic Regression: DV - Response Change; IV - Iw Tech and NV
+173      ! Sensistivity Group (Low NV Sensitivity - Conv Iw, High NV Sensitivity - Conv Iw; Stand Iw)"
+173      ! ;
+174        title "Reference group: Standardized Iw";
+175        proc logistic data=conv.PUF_question_level descending;
+176        	class group (ref = "Stand" param=ref);
+177        	model resp_change = group;
+10                                          The SAS System
+
+178        run;
+
+NOTE: PROC LOGISTIC is modeling the probability that Resp_Change=1.
+NOTE: Convergence criterion (GCONV=1E-8) satisfied.
+NOTE: There were 4900 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+NOTE: The PROCEDURE LOGISTIC printed pages 63-65.
+NOTE: PROCEDURE LOGISTIC used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.06 seconds
+      
+
+179        title;
+180        
+181        title "Analysis 7 (Table 2): Type of Definition Provided in Conversational Interviews by
+181      ! level of NV Sensitivity";
+182        proc freq data=conv.PUF_question_level;
+183        	where iw_tech = 'Conv';
+184        	table aud*(def_given preemp_given respdef_given)/chisq;
+185        run;
+
+NOTE: There were 2580 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE iw_tech='Conv';
+NOTE: The PROCEDURE FREQ printed pages 66-71.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+
+186        title;
+187        
+188        title "Analysis 8: % Response Change Provided in Conversational interviews by Low NV
+188      ! Sensitivity Interviewers by Type of Definition Given (Preemptive Strike vs Responsive
+188      ! Definition)";
+189        proc freq data=conv.PUF_question_level;
+190        	where iw_tech = 'Conv' and aud = 'Low' and def_type ne 'No Def Given';
+191        	table resp_change*def_type/chisq;
+192        run;
+
+NOTE: There were 476 observations read from the data set CONV.PUF_QUESTION_LEVEL.
+      WHERE (iw_tech='Conv') and (aud='Low') and (def_type not = 'No Def Given');
+NOTE: The PROCEDURE FREQ printed pages 72-73.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+193        title;
+194        
+195        /******************************************************************************************
+195      ! *****************************
+196        Section Timings Analyses using readmin_sect_timings.sas7bdat
+197        *******************************************************************************************
+197      ! ***************************/
+198        
+11                                          The SAS System
+
+199        /*Note: 1. The Section F (Readministration Section timing variable; varname timef) also did
+199      !  not meet the equality of variances assumption
+200        		required for a parametric t-test. However, a Satterwaite adjustment would have allowed us
+200      !  to use a t-test if that
+201        		was the only assumption not met. Unfortunately, as the PROC UNIVARIATE output below
+201      ! demonstrates, the timef data
+202        		were also not normally distributed. Thus, we used a Wilcoxson Mann-Whitney test.
+203        
+204        		2. The Re-administration section timings excluded 41 of 490 cases that either
+205        		   	a. indicated that they did not currently drive and thus did not receive the 4
+205      ! re-administration section questions about drowsy driving (n=39)
+206        				OR
+207        			b. completed fewer than 3 questions in the re-administration section (n=2).
+208        */
+209        
+210        
+211        /*Demonstrating the non-normality of the re-administration section timing variable
+211      ! (timef)*/
+212        title "Non-normality of Re-administration Section timing variable";
+213        proc univariate data=conv.readmin_sect_timings normal;
+214        	var timef;
+215        run;
+
+NOTE: The PROCEDURE UNIVARIATE printed pages 74-75.
+NOTE: PROCEDURE UNIVARIATE used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+
+216        title;
+217        
+218        title "Non-normality of Re-administration Section Timing Variable by Interviewing
+218      ! Technique";
+219        proc univariate data=conv.readmin_sect_timings normal;
+220        	class iw_tech;
+221        	var timef;
+222        	histogram timef;
+223        run;
+
+NOTE: The PROCEDURE UNIVARIATE printed pages 76-79.
+NOTE: PROCEDURE UNIVARIATE used (Total process time):
+12                                                         The SAS System
+
+      real time           1.01 seconds
+      cpu time            0.15 seconds
+      
+
+224        title;
+225        
+226        title "Mean Re-adminstration Section Timing (in Minutes) by Interviewing Technique";
+227        proc means data=conv.readmin_sect_timings;
+228        	class iw_tech;
+229        	var timef;
+230        run;
+
+NOTE: Multiple concurrent threads will be used to summarize data.
+NOTE: There were 449 observations read from the data set CONV.READMIN_SECT_TIMINGS.
+NOTE: The PROCEDURE MEANS printed page 80.
+NOTE: PROCEDURE MEANS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.06 seconds
+      
+
+231        title;
+232        
+233        /*Demonstrating the lack of homogeneity of variances*/
+234        title "Check equality of variances for timef";
+235        proc glm data=conv.readmin_sect_timings;
+236        	where duration_group ne '';
+237        	class duration_group;
+238        	model timef = duration_group;
+239        	means duration_group / hovtest;
+240        run;
+
+241        quit;
+
+NOTE: The PROCEDURE GLM printed pages 81-84.
+NOTE: PROCEDURE GLM used (Total process time):
+      real time           1.48 seconds
+      cpu time            0.32 seconds
+      
+
+242        title;
+243        
+13                                                         The SAS System
+
+244        title "Analysis #3: Statistical Test of Mean Re-administration Section Timing (in Minutes) by Interviewing Technique";
+245        title2 "Wilcoxson Mann-Whitney Test nonparametric test because groups do not have equal variances and data not normally
+245      ! distributed";
+246        proc npar1way data = conv.Readmin_sect_timings wilcoxon;
+247        	class iw_tech;
+248          	var timef;
+249        run;
+
+NOTE: The PROCEDURE NPAR1WAY printed page 85.
+NOTE: PROCEDURE NPAR1WAY used (Total process time):
+      real time           0.71 seconds
+      cpu time            0.17 seconds
+      
+
+250        title;
+251        
+252        title "Non-normality of Re-administration Section Timing Variable by Following Groups: Conv-High NV Sensitivity, Conv-Low
+252      !  NV Sensitivity, Standardized";
+253        proc univariate data=conv.Readmin_sect_timings normal;
+254        	where duration_group ne '';
+255        	class duration_group;
+256        	var timef;
+257        	histogram timef;
+258        run;
+
+NOTE: The PROCEDURE UNIVARIATE printed pages 86-94.
+NOTE: PROCEDURE UNIVARIATE used (Total process time):
+      real time           1.74 seconds
+      cpu time            0.29 seconds
+      
+
+259        title;
+260        
+261        title "Analysis #6: Mean Duration in Seconds of Re-administration Section by Nonverbal Sensitivity Group and Interviewing
+261      !  Technique";
+262        proc means data = conv.Readmin_sect_timings n mean lclm uclm stderr min max maxdec=2;
+263        	where duration_group ne '';
+264        	class duration_group;
+265          	var timef;
+266        run;
+
+14                                                         The SAS System
+
+NOTE: Multiple concurrent threads will be used to summarize data.
+NOTE: There were 341 observations read from the data set CONV.READMIN_SECT_TIMINGS.
+      WHERE duration_group not = ' ';
+NOTE: The PROCEDURE MEANS printed page 95.
+NOTE: PROCEDURE MEANS used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+
+267        title;
+268        
+269        title "Statistical Test of Mean Duration in Seconds of Re-administration Section - Conv-High NV Sensitivity vs Conv-Low
+269      ! NR Sensitivity";
+270        title2 "Wilcoxson Mann-Whitney Test nonparametric test because gropus do not have equal variances nor are they normally
+270      ! distributed";
+271        proc npar1way data = conv.Readmin_sect_timings wilcoxon;
+272        	where duration_group ne 'Stand';
+273        	class duration_group;
+274          	var timef;
+275        run;
+
+NOTE: The PROCEDURE NPAR1WAY printed page 96.
+NOTE: PROCEDURE NPAR1WAY used (Total process time):
+      real time           0.79 seconds
+      cpu time            0.09 seconds
+      
+
+276        title;
+277        
+278        title "Footnote 20 Analysis: Statistical Test of Mean Duration in Seconds of Re-administration Section - Standaridized vs
+278      !  Conv-Low NR Sensitivity";
+279        title2 "Wilcoxson Mann-Whitney Test nonparametric test because gropus do not have equal variances";
+280        proc npar1way data = conv.Readmin_sect_timings wilcoxon;
+281        	where duration_group ne 'High - CI';
+282        	class duration_group;
+283          	var timef;
+284        run;
+
+NOTE: The PROCEDURE NPAR1WAY printed page 97.
+NOTE: PROCEDURE NPAR1WAY used (Total process time):
+      real time           0.78 seconds
+15                                                         The SAS System
+
+      cpu time            0.18 seconds
+      
+
+285        title;
+286        
+287        title "Footnote 20 Analysis: Statistical Test of Mean Duration in Seconds of Re-administration Section - Standaridized vs
+287      !  Conv-High NR Sensitivity";
+288        title2 "Wilcoxson Mann-Whitney Test nonparametric test because gropus do not have equal variances";
+289        proc npar1way data = conv.Readmin_sect_timings wilcoxon;
+290        	where duration_group ne 'Lo - CI';
+291        	class duration_group;
+292          	var timef;
+293        run;
+
+NOTE: The PROCEDURE NPAR1WAY printed page 98.
+NOTE: PROCEDURE NPAR1WAY used (Total process time):
+      real time           0.87 seconds
+      cpu time            0.20 seconds
+      
+
+294        title;
+295        ods rtf close;
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           19.58 seconds
+      cpu time            4.59 seconds
+      
